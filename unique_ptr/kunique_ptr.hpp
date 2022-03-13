@@ -17,11 +17,11 @@ namespace kap35 {
                 _val = ptr;
             }
             ~unique_ptr() {
-                delete val;
+                delete _val;
             }
 
             T &get() {
-                return *val;
+                return *_val;
             }
 
         private:

@@ -7,8 +7,8 @@
 
 #include "kstring.hpp"
 #include "ktext.hpp"
-// #include "kunique_ptr.hpp"
-// #include "kshared_ptr.hpp"
+#include "kunique_ptr.hpp"
+#include "kshared_ptr.hpp"
 #include <criterion/criterion.h>
 
 Test(string, contructor_char_ptr) {

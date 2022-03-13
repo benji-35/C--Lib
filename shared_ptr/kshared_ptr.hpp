@@ -13,6 +13,12 @@ namespace kap35
     template<typename T>
     class shared_ptr {
         public:
+            shared_ptr() {
+                _val = nullptr;
+                _after = nullptr;
+                _hd = nullptr;
+            }
+
             shared_ptr(T *ptr) {
                 clear();
                 _val = ptr;
@@ -36,6 +42,14 @@ namespace kap35
                 last->_after = this;
                 _hd = ptr._hd;
 
+                return *this;
+            }
+
+            shared_ptr &operator=(T *val) {
+                clear();
+                _val = val;
+                _after = nullptr;
+                _hd = nullptr;
                 return *this;
             }
 

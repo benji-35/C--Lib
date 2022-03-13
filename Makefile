@@ -16,7 +16,8 @@ LIBS	=	-lcriterion
 
 TESTS	=	tests/
 
-SRC	=	$(TESTS)test.cpp
+SRC	=	$(TESTS)test.cpp					\
+		$(TESTS)test_shared_ptr.cpp			\
 
 OBJ	=	$(SRC:.cpp=.o)
 
