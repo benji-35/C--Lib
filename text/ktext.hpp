@@ -120,8 +120,8 @@ namespace kap35
                 unsigned int _size = size();
                 if (line >= _size)
                     line = _size - 1;
-                string &str = get(line);
-                str.insert(str, posInLine);
+                string &_str = get(line);
+                _str.insert(str, posInLine);
             }
 
         private:
