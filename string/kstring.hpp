@@ -129,6 +129,39 @@ namespace kap35 {
                 return _ltext;
             }
 
+            void insert(string const& str, unsigned int pos = 0) {
+                int _size = size();
+                if (pos >= _size)
+                    pos = _size - 1;
+                if (pos == 0) {
+                    *this = str;
+                    return;
+                }
+                unsigned int nsize = _size + str.size() + 1;
+
+                char *nstr = new char[nsize];
+                for (unsigned int i = 0; i < pos; i++) {
+                    nstr[i] = _chars[i];
+                }
+                for (unsigned int i = 0; i < str.size(); i++) {
+                    nstr[i + pos] = str.at(i);
+                }
+                for (unsigned int i = pos; i < size(); i++) {
+                    nstr[i + str.size()] = _chars[i];
+                }
+            }
+
+            void insert(char const& c, unsigned int pos = 0) {
+                insert(string(c), pos);
+            }
+
+            char &at(unsigned int index) const {
+                unsigned int _size = size();
+                if (index >= _size)
+                    return _chars[_size - 1];
+                return _chars[index];
+            }
+
             //operators
 
             string operator+(string const& str) {

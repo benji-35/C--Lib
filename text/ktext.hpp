@@ -35,7 +35,7 @@ namespace kap35
             ~text() {
                 _text.clear();
             }
-        
+
             unsigned int size() const {
                 return _text.size();
             }
@@ -102,6 +102,26 @@ namespace kap35
             text &operator=(list<string> const& l) {
                 _text = l;
                 return *this;
+            }
+
+            void add(string const& str) {
+                *this + str;
+            }
+
+            void addBack(string const& str) {
+                add(str);
+            }
+
+            void addFront(string const& str) {
+                _text.push_front(str);
+            }
+
+            void insert(string str, unsigned int line = 0, unsigned int posInLine = 0) {
+                unsigned int _size = size();
+                if (line >= _size)
+                    line = _size - 1;
+                string &str = get(line);
+                str.insert(str, posInLine);
             }
 
         private:
