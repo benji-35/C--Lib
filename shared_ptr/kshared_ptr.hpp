@@ -38,7 +38,7 @@ namespace kap35
                 clear();
                 _val = ptr._val;
 
-                shared_ptr *last = ptr.getLast();
+                shared_ptr<T> *last = ptr.getLast();
                 last->_after = this;
                 _hd = ptr._hd;
 
@@ -72,9 +72,9 @@ namespace kap35
             }
 
         private:
-            shared_ptr *getLast() {
+            shared_ptr<T> *getLast() const {
                 if (_after == nullptr)
-                    return this;
+                    return (shared_ptr<T> *)this;
                 return _after->getLast();
             }
 
@@ -86,8 +86,8 @@ namespace kap35
             }
 
             T *_val;
-            shared_ptr *_hd;
-            shared_ptr *_after;
+            shared_ptr<T> *_hd;
+            shared_ptr<T> *_after;
     };
 
 } // namespace kap35
