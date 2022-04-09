@@ -9,6 +9,7 @@
 #include "ktext.hpp"
 #include "kunique_ptr.hpp"
 #include "kshared_ptr.hpp"
+#include "kmap.hpp"
 #include <criterion/criterion.h>
 
 Test(string, contructor_char_ptr) {
@@ -59,4 +60,13 @@ Test(string, to_char_array) {
     kap35::string str = "Hello World !";
 
     cr_assert_str_eq(want, str.toCharArray(), "Error: want [%s] and got[%s]\n", want, str.toCharArray());
+}
+
+Test(map, one) {
+    kap35::Map<kap35::string, int> map;
+
+    map.add("toto", 12);
+    map.add("yolo", 8);
+
+    cr_assert(((map.get("toto") == 12) && (map.get("yolo") == 8)), "Error on map\n");
 }

@@ -8,12 +8,15 @@
 #ifndef KTEXT_HPP_
 #define KTEXT_HPP_
 
+
+// #include "kstring.hpp"
+#include <iostream>
+#include "klist.hpp"
+// #include "kstring.hpp"
+
 namespace kap35 {
     class string;
 }
-
-// #include "kstring.hpp"
-#include "klist.hpp"
 
 namespace kap35
 {
@@ -122,6 +125,22 @@ namespace kap35
                     line = _size - 1;
                 string &_str = get(line);
                 _str.insert(str, posInLine);
+            }
+
+            void remove(unsigned int index) {
+                if (index >= size())
+                    index = size();
+                _text.pop_at(index);
+            }
+
+            void dump(string splitter = "\n") {
+                for (unsigned int i = 0; i < _text.size(); i++) {
+                    try {
+                        std::cout << get(i).toCharArray();
+                        if (i != _text.size() - 1)
+                            std::cout << splitter.toCharArray();
+                    } catch(...) {}
+                }
             }
 
         private:

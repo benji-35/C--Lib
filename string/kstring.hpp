@@ -10,6 +10,7 @@
 
 #include "klist.hpp"
 #include "kexceptions.hpp"
+#include <iostream>
 
 namespace kap35 {
     class exception;
@@ -32,7 +33,7 @@ namespace kap35 {
                     delete _chars;
                 while (str[_size])
                     _size++;
-                _chars = new char[_size + 1]();
+                __realloc(_size);
                 for (unsigned int i = 0; i < _size; i++)
                     _chars[i] = str[i];
             }
@@ -49,8 +50,9 @@ namespace kap35 {
             }
 
             ~string() {
-                if (_chars != nullptr)
-                    delete _chars;
+                if (_chars != nullptr) {
+                    delete [] _chars;
+                }
             }
 
             string copy(unsigned int from, unsigned int to) {
@@ -88,13 +90,18 @@ namespace kap35 {
                 _chars[0] = 0;
             }
 
-            unsigned int find(string str, unsigned int pos = 0, unsigned int end = -1) {
+            void __clearNoAllocs() {
+                delete _chars;
+                _chars = nullptr;
+            }
+
+            unsigned int find(string const& str, unsigned int pos = 0, unsigned int end = -1) const {
                 if (end == -1)
                     end = size();
                 for (unsigned int i = pos; i < end; i++) {
                     unsigned int x = 0;
                     for (; x < str.size(); x++) {
-                        if (str[x] != (*this)[i + x])
+                        if (str.at(x) != (*this).at(i + x))
                             break;
                     }
                     if (x >= str.size()) {
@@ -104,7 +111,7 @@ namespace kap35 {
                 return size();
             }
 
-            unsigned int find(char const& c, unsigned int pos = 0, unsigned int end = -1) {
+            unsigned int find(char const& c, unsigned int pos = 0, unsigned int end = -1) const {
                 string str(c);
 
                 return find(str, pos, end);
@@ -160,6 +167,34 @@ namespace kap35 {
                 if (index >= _size)
                     return _chars[_size - 1];
                 return _chars[index];
+            }
+
+            void toUpper() {
+
+            }
+
+            void toLower() {
+                
+            }
+
+            string getUpper() {
+                string res = *this;
+                res.toUpper();
+
+                return res;
+            }
+
+            string getLower() {
+                string res = *this;
+                res.toLower();
+
+                return res;
+            }
+
+            bool isInString(string toFind) const {
+                if (find(toFind, 0, size()) == size())
+                    return false;
+                return true;
             }
 
             //operators
@@ -262,7 +297,7 @@ namespace kap35 {
 
         private:
             void __realloc(unsigned int _size) {
-                char *_nchars = new char[_size + 1]();
+                char *_nchars = new char[_size + 1];
 
                 for (unsigned int i = 0; i < size(); i++) {
                     if (i >= _size)
@@ -270,7 +305,8 @@ namespace kap35 {
                     _nchars[i] = _chars[i];
                 }
                 _nchars[_size] = 0;
-                delete _chars;
+                if (_chars != nullptr)
+                    delete _chars;
                 _chars = _nchars;
             }
 

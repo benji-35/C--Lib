@@ -54,12 +54,12 @@ namespace kap35 {
             }
 
             void pop_back() {
-                node_list _last = getLast();
+                node_list *_last = getLast();
 
                 if (_last == nullptr)
                     return;
                 delete _last;
-                _list = _last._before;
+                _list = _last->_before;
             }
 
             void pop_front() {
@@ -69,6 +69,19 @@ namespace kap35 {
 
                 _list = _list->_next;
                 _list->_before = nullptr;
+            }
+
+            void pop_at(unsigned int index) {
+                if (index == 0)
+                    return pop_front();
+                if (index >= size() - 1)
+                    return pop_back();
+                node_list *tmp = _list;
+                while (index > 0) {
+                    tmp = tmp->_next;
+                }
+                ((node_list *)tmp->_before)->_next = tmp->_next;
+                delete tmp;
             }
 
             unsigned int size() const {
@@ -122,6 +135,10 @@ namespace kap35 {
                     push_back(l.get(i));
                 }
                 return *this;
+            }
+
+            T &operator[](unsigned int index) {
+                return at(index);
             }
 
         private:

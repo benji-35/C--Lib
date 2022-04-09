@@ -11,6 +11,7 @@ INCLUDES	=	-I string/													\
 				-I text/													\
 				-I shared_ptr/												\
 				-I unique_ptr/												\
+				-I map/														\
 
 LIBS	=	-lcriterion
 
@@ -24,18 +25,20 @@ OBJ	=	$(SRC:.cpp=.o)
 BIN_NAME	=	run_test
 
 %.o: %.cpp
-	@echo "$(GAME_NAME) > [CPP: $<]"
+	@echo "$(BIN_NAME) > [CPP: $<]"
 	@g++ -c $< $(INCLUDES) -o $@
 
 all:	tests
 
 tests:	$(OBJ)
 	@g++ -o $(BIN_NAME) $(OBJ) $(INCLUDES) $(LIBS)
+	@g++ -o bin_test main_test.cpp -g $(INCLUDES) $(LIBS)
 
 clean:
 	rm -f $(OBJ)
 
 fclean: clean
 	rm -f $(BIN_NAME)
+	rm -f bin_test
 
 re:	fclean all

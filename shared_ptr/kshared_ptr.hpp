@@ -8,28 +8,13 @@
 #ifndef SHARED_PTR_HPP_
 #define SHARED_PTR_HPP_
 
+
+#include <iostream>
 namespace kap35
 {
     template<typename T>
     class shared_ptr {
         public:
-            shared_ptr() {
-                _val = nullptr;
-                _after = nullptr;
-                _hd = nullptr;
-            }
-
-            shared_ptr(T *ptr) {
-                clear();
-                _val = ptr;
-                _after = nullptr;
-                _hd = nullptr;
-            }
-
-            shared_ptr(shared_ptr const& ptr) {
-                (shared_ptr)*this = ptr;
-            }
-
             ~shared_ptr() {
                 clear();
             }
@@ -54,11 +39,15 @@ namespace kap35
             }
 
             void clear() {
-                _val = nullptr;
                 if (_hd == nullptr && _after == nullptr) {
-                    delete _val;
+                    if (_val != nullptr) {
+                        delete (T *)_val;
+                        _val = nullptr;
+                        std::cout << "delete _val" << std::endl;
+                    }
                     return;
                 }
+                _val = nullptr;
                 if (_hd == nullptr) {
                     _after->changeAllHd(_after);
                     _after->_hd = nullptr;
@@ -85,9 +74,9 @@ namespace kap35
                 _after->changeAllHd(nhd);
             }
 
-            T *_val;
-            shared_ptr<T> *_hd;
-            shared_ptr<T> *_after;
+            T *_val = nullptr;
+            shared_ptr<T> *_hd = nullptr;
+            shared_ptr<T> *_after = nullptr;
     };
 
 } // namespace kap35
