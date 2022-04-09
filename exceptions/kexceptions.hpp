@@ -8,12 +8,8 @@
 #ifndef KEXCEPTIONS_HPP_
 #define KEXCEPTIONS_HPP_
 
-#include "kstring.hpp"
 #include <exception>
 
-namespace kap35 {
-    class string;
-}
 
 namespace kap35 {
     class exception : std::exception {

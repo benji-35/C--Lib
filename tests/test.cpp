@@ -63,7 +63,7 @@ Test(string, to_char_array) {
 }
 
 Test(map, one) {
-    kap35::Map<kap35::string, int> map;
+    kap35::map<kap35::string, int> map;
 
     map.add("toto", 12);
     map.add("yolo", 8);

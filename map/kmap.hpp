@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2022
 ** C++-Lib
 ** File description:
-** Map
+** map
 */
 
 #ifndef MAP_HPP_
@@ -10,6 +10,7 @@
 
 #include "klist.hpp"
 #include "kexceptions.hpp"
+#include <iostream>
 
 namespace kep35 {
     class exception;
@@ -19,13 +20,13 @@ namespace kep35 {
 namespace kap35 {
 
     template<typename KEY, typename CONTENT>
-    class Map {
+    class map {
         public:
             struct node_map {
                 KEY _key;
                 CONTENT _cont;
-                node_map *_next;
-                node_map *_before;
+                node_map *_next = nullptr;
+                node_map *_before = nullptr;
 
                 node_map(KEY key, CONTENT content, node_map *before = nullptr, node_map *next = nullptr) {
                     _key = key;
@@ -34,6 +35,10 @@ namespace kap35 {
                     _before = before;
                 }
             };
+
+            ~map() {
+                clear();
+            }
 
             CONTENT &get(KEY const& k) {
                 node_map *tmp = _list;
@@ -69,13 +74,14 @@ namespace kap35 {
             }
 
             void add(KEY key, CONTENT content) {
-                node_map *nnode = new node_map(key, content, _list, nullptr);
+
+                node_map *last = getLast();
 
                 if (_list == nullptr) {
-                    _list = nnode;
+                    _list = new node_map(key, content, last, nullptr);
                     return;
                 }
-                getLast()->_next = nnode;
+                last->_next = new node_map(key, content, last, nullptr);
             }
 
             void clear() {
@@ -98,7 +104,7 @@ namespace kap35 {
                     return;
                 node_map *tmp = _list;
 
-                while (tmp != nullptr) {
+                while (tmp) {
                     if (tmp->_key == k) {
                         ((node_map *)tmp->_before)->_next = tmp->_next;
                         delete tmp;
@@ -108,7 +114,7 @@ namespace kap35 {
                 }
             }
 
-            Map<KEY, CONTENT> &operator=(Map<KEY, CONTENT> const& map) {
+            map<KEY, CONTENT> &operator=(map<KEY, CONTENT> const& map) {
                 clear();
             }
 

@@ -21,6 +21,7 @@ namespace kap35 {
     class string
     {
         public:
+        
             string() {
                 _chars = new char[1]();
                 _chars[0] = 0;
@@ -43,10 +44,18 @@ namespace kap35 {
                 *this = str;
             }
 
-            string(char const c) {
+            string(char const& c) {
                 __realloc(1);
                 _chars[0] = c;
                 _chars[1] = 0;
+            }
+
+            string(int const& i) {
+                *this = i;
+            }
+
+            string(unsigned int const& i) {
+                *this = i;
             }
 
             ~string() {
@@ -85,7 +94,9 @@ namespace kap35 {
             }
 
             void clear() {
-                delete _chars;
+                if (_chars != nullptr) {
+                    delete [] _chars;
+                }
                 _chars = new char[1]();
                 _chars[0] = 0;
             }
@@ -217,6 +228,32 @@ namespace kap35 {
                 return *this + string(c);
             }
 
+            string operator+(int const& i) {
+                string intStr;
+                bool negative = false;
+                int value = i;
+
+                if (value < 0) {
+                    negative = true;
+                    value *= -1;
+                    intStr = "-";
+                }
+                while (value >= 0) {
+                    intStr += (char)((value % 10) + 48);
+                }
+                return intStr;
+            }
+
+            string operator+(unsigned int const& i) {
+                string intStr;
+                int value = i;
+
+                while (value >= 0) {
+                    intStr += (char)((value % 10) + 48);
+                }
+                return intStr;
+            }
+
             string &operator<<(string const& str) {
                 *this = *this + str;
                 return *this;
@@ -224,6 +261,16 @@ namespace kap35 {
 
             string &operator<<(char const& c) {
                 *this = *this + c;
+                return *this;
+            }
+
+            string &operator<<(int const& i) {
+                *this = *this + i;
+                return *this;
+            }
+
+            string &operator<<(unsigned int const& i) {
+                *this = *this + i;
                 return *this;
             }
 
@@ -266,12 +313,36 @@ namespace kap35 {
                 return *this;
             }
 
+            string &operator=(int const& i) {
+                string intStr;
+
+                intStr += i;
+                *this = intStr;
+                return *this;
+            }
+
+            string &operator=(unsigned int const& i) {
+                string intStr;
+
+                intStr += i;
+                *this = intStr;
+                return *this;
+            }
+
             string &operator+=(string const& str) {
                 return *this << str;
             }
 
             string &operator+=(char const& c) {
                 return *this << c;
+            }
+
+            string &operator+=(int const& i) {
+                return *this << i;
+            }
+
+            string &operator+=(unsigned int const& i) {
+                return *this << i;
             }
 
             bool operator==(string const& str) {
@@ -306,7 +377,7 @@ namespace kap35 {
                 }
                 _nchars[_size] = 0;
                 if (_chars != nullptr)
-                    delete _chars;
+                    delete [] _chars;
                 _chars = _nchars;
             }
 
