@@ -10,16 +10,32 @@
 
 
 #include <iostream>
+
 namespace kap35
 {
     template<typename T>
     class shared_ptr {
         public:
+
+            shared_ptr(T *val) {
+                *this = val;
+            }
+
+            shared_ptr(shared_ptr<T> const& ptr) {
+                *this = ptr;
+            }
+
+            shared_ptr() {
+                _val = nullptr;
+                _after = nullptr;
+                _hd = nullptr;
+            }
+
             ~shared_ptr() {
                 clear();
             }
 
-            shared_ptr &operator=(shared_ptr const& ptr) {
+            shared_ptr &operator=(shared_ptr<T> const& ptr) {
                 clear();
                 _val = ptr._val;
 

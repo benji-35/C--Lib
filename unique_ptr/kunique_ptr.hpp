@@ -16,6 +16,7 @@ namespace kap35 {
             unique_ptr(T *ptr) {
                 _val = ptr;
             }
+
             ~unique_ptr() {
                 delete _val;
             }
