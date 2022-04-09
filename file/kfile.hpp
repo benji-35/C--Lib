@@ -26,8 +26,11 @@ namespace kap35 {
             file () {
                 _path = "";
             }
-            file(string const& path) {
+            file(string const& path, bool autoCreate = false) {
                 _path = path;
+                if (!exists() && autoCreate) {
+                    create();
+                }
             }
             ~file() {}
 
@@ -97,7 +100,7 @@ namespace kap35 {
                 write(cTxt);
             }
 
-            void insert(text const& txt, unsigned int pos) {
+            void insert(text const& txt, unsigned int pos, bool replaceEnd = false) {
                 if (!exists()) {
                     std::cerr << "the file " << _path.toCharArray() << " doesn't exists" << std::endl;
                     return;
@@ -116,12 +119,18 @@ namespace kap35 {
 
                 finalTxt += txt;
 
+                if (!replaceEnd) {
+                    for (unsigned int i = pos; i < _cText.size(); i++) {
+                        finalTxt += _cText.get(i);
+                    }
+                }
+
                 write(finalTxt);
             }
 
-            void insert(string const& str, unsigned int pos) {
+            void insert(string const& str, unsigned int pos, bool replaceEnd = false) {
                 string tmp = str;
-                insert(tmp.split("\n"), pos);
+                insert(tmp.split("\n"), pos, replaceEnd);
             }
 
             void remove() {
@@ -135,7 +144,7 @@ namespace kap35 {
                     return;
                 std::ofstream _create(_path.toCharArray());
 
-                _create << std::endl;
+                _create << "";
                 _create.close();
             }
 

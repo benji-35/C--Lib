@@ -17,7 +17,7 @@
 
 int main(int ac, char **av)
 {
-    kap35::file _file("testFile");
+    kap35::file _file("testFile", true);
 
     kap35::text _txt = _file.openT();
 
