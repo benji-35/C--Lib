@@ -9,6 +9,7 @@
 #define KLIST_HPP_
 
 #include "kexceptions.hpp"
+#include <iostream>
 
 namespace kap35 {
     class exception;
@@ -30,6 +31,10 @@ namespace kap35 {
                 }
             };
 
+            ~list() {
+                clear();
+            }
+
             void push_back(T val) {
                 insert(size(), val);
             }
@@ -38,16 +43,24 @@ namespace kap35 {
                 insert(0, val);
             }
 
-            void insert(unsigned int index, T val) {
-                if (index == 0) {
+            void insert(unsigned int const& index, T val) {
+                unsigned int _index = index;
+                if (_index == 0) {
                     node_list *n = new node_list(val, nullptr, _list);
-                    _list->_before = n;
+                    if (_list != nullptr) {
+                        _list->_before = n;
+                    }
                     _list = n;
                     return;
                 }
+                if (_index == size()) {
+                    node_list *_last = getLast();
+                    _last->_next = new node_list(val, _last, nullptr);
+                    return;
+                }
                 node_list *tmp = _list;
-                while (index > 0 || tmp->_next == nullptr) {
-                    index--;
+                while (_index > 0 || tmp->_next == nullptr) {
+                    _index--;
                 }
                 node_list *n = new node_list(val, tmp, tmp->_next);
                 tmp->_next = n;
@@ -88,7 +101,7 @@ namespace kap35 {
                 node_list *tmp = _list;
                 unsigned int res = 0;
 
-                while (tmp != nullptr) {
+                while (tmp) {
                     tmp = tmp->_next;
                     res++;
                 }
@@ -96,11 +109,17 @@ namespace kap35 {
             }
 
             void clear() {
-                node_list *tmp = _list->_next;
-                while (_list != nullptr) {
-                    delete _list;
-                    tmp = tmp->_next;
-                    _list = tmp;
+                node_list *tmp = _list;
+                node_list *nxt = nullptr;
+
+                if (tmp == nullptr)
+                    return;
+                nxt = tmp->_next;
+                while (tmp) {
+                    delete tmp;
+                    tmp = nxt;
+                    if (nxt != nullptr)
+                        nxt = nxt->_next;
                 }
             }
 

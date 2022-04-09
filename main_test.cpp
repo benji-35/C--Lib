@@ -16,19 +16,13 @@
 
 int main(int ac, char **av)
 {
-    kap35::map<int, kap35::string> _map;
+    kap35::list<kap35::string> _list;
 
-    _map.add(1, "1");
-    _map.add(2, "2");
-    _map.add(3, "3");
-    _map.add(4, "4");
-    _map.add(5, "5");
+    _list.push_back("toto");
+    _list.push_back("toto2");
+    _list.push_back("toto3");
 
-    std::cout << "map size: " << std::to_string(_map.size()) << std::endl;
-
-    for (int i = 0; i < _map.size(); i++) {
-        if (_map.keyExists(i + 1)) {
-            std::cout << _map.get(i + 1).toCharArray() << std::endl;
-        }
+    for (unsigned int i = 0; i < _list.size(); i++) {
+        std::cout << _list.at(i).toCharArray() << std::endl;
     }
 }
