@@ -24,4 +24,7 @@ int main(int ac, char **av)
     _txt.dump();
 
     _file.append("test");
+
+    if (_txt.size() >= 4)
+        _file.remove();
 }
