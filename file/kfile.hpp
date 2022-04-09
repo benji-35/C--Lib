@@ -32,6 +32,9 @@ namespace kap35 {
                     create();
                 }
             }
+            file(file const& f) {
+                *this = f;
+            }
             ~file() {}
 
             bool exists() {
@@ -146,6 +149,15 @@ namespace kap35 {
 
                 _create << "";
                 _create.close();
+            }
+
+            file &operator=(file const& f) {
+                _path = f._path;
+                return *this;
+            }
+
+            void setPath(string const& path) {
+                _path = path;
             }
 
         private:
