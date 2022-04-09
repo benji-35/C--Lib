@@ -12,7 +12,7 @@
 // #include "kstring.hpp"
 #include <iostream>
 #include "klist.hpp"
-// #include "kstring.hpp"
+#include "kstring.hpp"
 
 namespace kap35 {
     class string;
@@ -22,22 +22,22 @@ namespace kap35
 {
     class text {
         public:
-            text() {}
+            text() {
+                _text.push_back("");
+            }
             text(string const& str) {
                 string _str = str;
                 _text.push_back(_str);
             }
             text(string const& str, string splitter, int nb = -1) {
                 string _str = str;
-                *this = _str.split(splitter, nb);
+                _text = _str.split(splitter, nb);
             }
             text(text const& txt) {
                 *this = txt;
             }
 
-            ~text() {
-                _text.clear();
-            }
+            ~text() {}
 
             unsigned int size() const {
                 return _text.size();
@@ -103,6 +103,7 @@ namespace kap35
             }
 
             text &operator=(list<string> const& l) {
+                _text.clear();
                 _text = l;
                 return *this;
             }
@@ -137,8 +138,7 @@ namespace kap35
                 for (unsigned int i = 0; i < _text.size(); i++) {
                     try {
                         std::cout << get(i).toCharArray();
-                        if (i != _text.size() - 1)
-                            std::cout << splitter.toCharArray();
+                        std::cout << splitter.toCharArray();
                     } catch(...) {}
                 }
             }

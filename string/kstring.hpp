@@ -130,18 +130,20 @@ namespace kap35 {
 
             list<string> split(string splitter, int nbSplits = -1) {
                 list<string> _ltext;
-
                 unsigned int curr = 0;
                 unsigned int found = 0;
                 unsigned int sizeSplitter = splitter.size();
+
                 while (curr < size()) {
                     if (nbSplits == 0)
                         break;
                     found = find(splitter, curr);
                     if (found != 0 && found != size()) {
                         _ltext.push_back(copy(curr, found - 1));
+                    } else {
+                        _ltext.push_back(copy(curr, size()));
                     }
-                    curr += sizeSplitter;
+                    curr += _ltext.at(_ltext.size() - 1).size() + sizeSplitter;
                     nbSplits--;
                 }
                 return _ltext;

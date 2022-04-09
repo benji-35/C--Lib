@@ -101,6 +101,8 @@ namespace kap35 {
                 node_list *tmp = _list;
                 unsigned int res = 0;
 
+                if (tmp == nullptr)
+                    return 0;
                 while (tmp) {
                     tmp = tmp->_next;
                     res++;
@@ -110,10 +112,11 @@ namespace kap35 {
 
             void clear() {
                 node_list *tmp = _list;
-                node_list *nxt = nullptr;
+                node_list *nxt;
 
-                if (tmp == nullptr)
+                if (tmp == nullptr) {
                     return;
+                }
                 nxt = tmp->_next;
                 while (tmp) {
                     delete tmp;
@@ -121,6 +124,7 @@ namespace kap35 {
                     if (nxt != nullptr)
                         nxt = nxt->_next;
                 }
+                _list = nullptr;
             }
 
             T& at(unsigned int index) {
@@ -148,7 +152,7 @@ namespace kap35 {
                 return tmp->_val;
             }
 
-            list<T> &operator=(list<T> const&l) {
+            list<T> &operator=(list<T> const& l) {
                 clear();
                 for (unsigned int i = 0; i < l.size(); i++) {
                     push_back(l.get(i));
