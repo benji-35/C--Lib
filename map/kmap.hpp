@@ -97,6 +97,7 @@ namespace kap35 {
                     if (nxt != nullptr)
                         nxt = nxt->_next;
                 }
+                _list = nullptr;
             }
 
             void remove(KEY const& k) {
