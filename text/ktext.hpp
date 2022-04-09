@@ -36,6 +36,9 @@ namespace kap35
             text(text const& txt) {
                 *this = txt;
             }
+            text(list<string> const& l) {
+                *this = l;
+            }
 
             ~text() {}
 
@@ -51,14 +54,14 @@ namespace kap35
                 return _text.get(index);
             }
 
-            string toString(string separator = "") {
+            string toString(string separator = "") const {
                 string res;
 
                 for (unsigned int i = 0; i < size(); i++) {
                     if (i == 0) {
-                        res += get(i);
+                        res += _text.get(i);
                     } else {
-                        res += separator + get(i);
+                        res += separator + _text.get(i);
                     }
                 }
 
@@ -141,6 +144,10 @@ namespace kap35
                         std::cout << splitter.toCharArray();
                     } catch(...) {}
                 }
+            }
+
+            void clear() {
+                _text.clear();
             }
 
         private:

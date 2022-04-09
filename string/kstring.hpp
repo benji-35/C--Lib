@@ -230,6 +230,13 @@ namespace kap35 {
                 return *this + string(c);
             }
 
+            string operator+(char const* c) {
+                string _ctmp(c);
+                string res = *this + _ctmp;
+
+                return res;
+            }
+
             string operator+(int const& i) {
                 string intStr;
                 bool negative = false;

@@ -12,6 +12,7 @@ INCLUDES	=	-I string/													\
 				-I shared_ptr/												\
 				-I unique_ptr/												\
 				-I map/														\
+				-I file/													\
 
 LIBS	=	-lcriterion
 
