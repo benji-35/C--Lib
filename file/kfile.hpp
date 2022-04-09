@@ -125,11 +125,18 @@ namespace kap35 {
             }
 
             void remove() {
-
+                if (!exists())
+                    return;
+                std::remove(_path.toCharArray());
             }
 
             void create() {
+                if (exists())
+                    return;
+                std::ofstream _create(_path.toCharArray());
 
+                _create << std::endl;
+                _create.close();
             }
 
         private:
