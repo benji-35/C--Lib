@@ -128,7 +128,7 @@ namespace kap35 {
             }
 
             T& at(unsigned int index) {
-                if (index > size()) {
+                if (index >= size()) {
                     throw exception("index out of range");
                 }
                 node_list *tmp = _list;
