@@ -183,11 +183,19 @@ namespace kap35 {
             }
 
             void toUpper() {
-
+                for (unsigned int i = 0; i < size(); i++) {
+                    if (_chars[i] >= 'a' && _chars[i] <= 'z') {
+                        _chars[i] -= 32;
+                    }
+                }
             }
 
             void toLower() {
-                
+                for (unsigned int i = 0; i < size(); i++) {
+                    if (_chars[i] >= 'A' && _chars[i] <= 'Z') {
+                        _chars[i] += 32;
+                    }
+                }
             }
 
             string getUpper() {
@@ -208,6 +216,49 @@ namespace kap35 {
                 if (find(toFind, 0, size()) == size())
                     return false;
                 return true;
+            }
+
+            //function toSomething
+
+            int toInt(unsigned int pos = 0) {
+                int res = 0;
+                bool neg = false;
+                string curr(*this);
+
+                if (curr.size() == 0 || curr.size() <= pos) {
+                    return res;
+                }
+                unsigned int startPos = pos;
+                if (curr.size() >= pos + 2 && curr[pos] == '-') {
+                    neg = true;
+                    startPos = pos + 1;
+                }
+                for (; startPos < curr.size(); startPos++) {
+                    if (curr[startPos] < '0' || curr[startPos] > '9')
+                        break;
+                    res *= 10;
+                    res += curr[startPos] - 48;
+                }
+                if (neg)
+                    res *= -1;
+                return res;
+            }
+
+            unsigned int toUInt(unsigned int pos = 0) {
+                unsigned int res = 0;
+                string curr(*this);
+
+                if (curr.size() == 0 || curr.size() <= pos) {
+                    return res;
+                }
+                unsigned int startPos = pos;
+                for (; startPos < curr.size(); startPos++) {
+                    if (curr[startPos] < '0' || curr[startPos] > '9')
+                        break;
+                    res *= 10;
+                    res += curr[startPos] - 48;
+                }
+                return res;
             }
 
             //operators
