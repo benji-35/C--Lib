@@ -17,12 +17,12 @@
 
 int main(int ac, char **av)
 {
-    kap35::string str("Hello World !");
+    kap35::string str("Hello World\t!");
     kap35::list<kap35::string> separators;
     kap35::text txt;
 
     separators.push_back(" ");
-    // separators.push_back("\t");
+    separators.push_back("\t");
 
     txt = str.ssplit(separators);
     txt.dump();
