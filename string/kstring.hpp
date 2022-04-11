@@ -135,8 +135,10 @@ namespace kap35 {
                 unsigned int sizeSplitter = splitter.size();
 
                 while (curr < size()) {
-                    if (nbSplits == 0)
+                    if (nbSplits == 0) {
+                        _ltext.at(_ltext.size() - 1) += copy(curr - 1, size());
                         break;
+                    }
                     found = find(splitter, curr);
                     if (found != 0 && found != size()) {
                         _ltext.push_back(copy(curr, found - 1));
@@ -144,6 +146,49 @@ namespace kap35 {
                         _ltext.push_back(copy(curr, size()));
                     }
                     curr += _ltext.at(_ltext.size() - 1).size() + sizeSplitter;
+                    nbSplits--;
+                }
+                return _ltext;
+            }
+
+            list<string> ssplit(list<string> const& _splitters, int nbSplits = -1) {
+                list<string> _ltext;
+                list<string> splitters;
+                unsigned int curr = 0;
+                unsigned int found = 0;
+
+                int indexLower = 0;
+
+                splitters = _splitters;
+
+                if (splitters.size() == 0) {
+                    _ltext.push_back(*this);
+                    return _ltext;
+                }
+
+                while (curr < size()) {
+                    if (nbSplits == 0) {
+                        _ltext.at(_ltext.size() - 1) += copy(curr - 1, size());
+                        break;
+                    }
+                    indexLower = 0;
+                    for (unsigned int i = 0; i < splitters.size(); i++) {
+                        if (i > 0) {
+                            unsigned int tmpFound = find(splitters.at(i), curr);
+                            if (tmpFound < found) {
+                                found = tmpFound;
+                                indexLower = i;
+                            }
+                        } else {
+                            found = find(splitters.at(i), curr);
+                        }
+                    }
+                    if (found != 0 && found != size()) {
+                        _ltext.push_back(copy(curr, found - 1));
+                    } else {
+                        _ltext.push_back(copy(curr, size()));
+                    }
+                    curr += _ltext.at(_ltext.size() - 1).size() + splitters.at(indexLower).size();
                     nbSplits--;
                 }
                 return _ltext;

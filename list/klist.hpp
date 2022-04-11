@@ -114,15 +114,14 @@ namespace kap35 {
                 node_list *tmp = _list;
                 node_list *nxt;
 
-                if (tmp == nullptr) {
+                if (_list == nullptr || tmp == nullptr) {
+                    _list = nullptr;
                     return;
                 }
-                nxt = tmp->_next;
                 while (tmp) {
+                    nxt = tmp->_next;
                     delete tmp;
                     tmp = nxt;
-                    if (nxt != nullptr)
-                        nxt = nxt->_next;
                 }
                 _list = nullptr;
             }

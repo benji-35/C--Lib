@@ -17,14 +17,14 @@
 
 int main(int ac, char **av)
 {
-    kap35::file _file("testFile", true);
+    kap35::string str("Hello World !");
+    kap35::list<kap35::string> separators;
+    kap35::text txt;
 
-    kap35::text _txt = _file.openT();
+    separators.push_back(" ");
+    // separators.push_back("\t");
 
-    _txt.dump();
-
-    _file.append("test");
-
-    if (_txt.size() >= 4)
-        _file.remove();
+    txt = str.ssplit(separators);
+    txt.dump();
+    separators.clear();
 }
