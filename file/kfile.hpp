@@ -160,7 +160,7 @@ namespace kap35 {
                 _path = path;
             }
 
-        private:
+        protected:
             string _path;
     };
 
