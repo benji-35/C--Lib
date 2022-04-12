@@ -51,10 +51,14 @@ namespace kap35 {
             }
 
             string(int const& i) {
+                _chars = new char[1]();
+                _chars[0] = 0;
                 *this = i;
             }
 
             string(unsigned int const& i) {
+                _chars = new char[1]();
+                _chars[0] = 0;
                 *this = i;
             }
 
@@ -216,6 +220,21 @@ namespace kap35 {
                 }
             }
 
+            list<string> getWords() {
+                list<string> seperators;
+
+                seperators.push_back(" ");
+                seperators.push_back("\t");
+                seperators.push_back("\n");
+                seperators.push_back("\r");
+                seperators.push_back("\a");
+                seperators.push_back("\b");
+                seperators.push_back("\v");
+                seperators.push_back("\f");
+
+                return ssplit(seperators);
+            }
+
             void insert(char const& c, unsigned int pos = 0) {
                 insert(string(c), pos);
             }
@@ -343,8 +362,13 @@ namespace kap35 {
                     value *= -1;
                     intStr = "-";
                 }
-                while (value >= 0) {
+                if (value == 0) {
+                    intStr += '0';
+                    return intStr;
+                }
+                while (value > 0) {
                     intStr += (char)((value % 10) + 48);
+                    value /= 10;
                 }
                 return intStr;
             }
