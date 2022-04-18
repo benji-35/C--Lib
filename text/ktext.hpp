@@ -150,6 +150,21 @@ namespace kap35
                 _text.clear();
             }
 
+            void removeEmptyLines() {
+                bool back = false;
+                for (unsigned int i = 0; i < size(); i++) {
+                    if (back) {
+                        i--;
+                        back = false;
+                    }
+                    if (get(i) == "") {
+                        std::cout << "remove line " << std::to_string(i) << std::endl;
+                        remove(i);
+                        back = true;
+                    }
+                }
+            }
+
         private:
             list<string> _text;
     };

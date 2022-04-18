@@ -92,6 +92,7 @@ namespace kap35 {
                 node_list *tmp = _list;
                 while (index > 0) {
                     tmp = tmp->_next;
+                    index--;
                 }
                 ((node_list *)tmp->_before)->_next = tmp->_next;
                 delete tmp;
