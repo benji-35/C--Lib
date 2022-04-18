@@ -8,8 +8,7 @@
 #ifndef SHARED_PTR_HPP_
 #define SHARED_PTR_HPP_
 
-
-#include <iostream>
+#include "kexceptions.hpp"
 
 namespace kap35
 {
@@ -59,7 +58,6 @@ namespace kap35
                     if (_val != nullptr) {
                         delete (T *)_val;
                         _val = nullptr;
-                        std::cout << "delete _val" << std::endl;
                     }
                     return;
                 }
@@ -73,6 +71,8 @@ namespace kap35
             }
 
             T &get() {
+                if (_val == nullptr)
+                    throw exception("no value in shared ptr");
                 return *_val;
             }
 

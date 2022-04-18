@@ -13,18 +13,15 @@
 #include "kmap.hpp"
 #include "klist.hpp"
 #include "kfile.hpp"
+#include "kymlfile.hpp"
+
 #include <iostream>
 
 int main(int ac, char **av)
 {
-    kap35::string str("Hello World\t!");
-    kap35::list<kap35::string> separators;
-    kap35::text txt;
+    kap35::string str("Hello World !");
 
-    separators.push_back(" ");
-    separators.push_back("\t");
+    std::cout << "nb o in " << str.toCharArray() << " = " << std::to_string(str.nbOcurrenceOf("o")) << std::endl;
 
-    txt = str.ssplit(separators);
-    txt.dump();
-    separators.clear();
+    return 0;
 }

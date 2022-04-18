@@ -23,22 +23,16 @@ namespace kap35 {
     class ymlFile : public file {
         public:
             ymlFile(string const& path, bool autoCreate = false) : file(path, autoCreate) {
-                _content = openT();
             }
             ~ymlFile() {
 
             }
 
-            void setPath(string const& path, bool autoCreate = false) {
-                _content.clear();
-                _path = path;
-                _content = openT();
-            }
-
             string get(string const& pathValue) {
-                text txtPath;
+                string strPath = pathValue;
+                text txtPath(strPath.split("."));
 
-                if (!exists())
+                if (!exists() || !pathValueExeists(pathValue))
                     return "";
 
                 txtPath = string(pathValue).split(".");
@@ -61,6 +55,22 @@ namespace kap35 {
                 return strRes.toInt();
             }
 
+            bool pathValueExeists(string const& pathValue) {
+                string strPath = pathValue;
+                text txtPath(strPath.split("."));
+
+                if (!exists())
+                    return false;
+
+                text content(openT());
+
+                for (unsigned int i = 0; i < content.size(); i++) {
+                    
+                }
+
+                return false;
+            }
+
             list<string> getArray(string const& pathValue) {
                 list<string> res;
 
@@ -68,7 +78,6 @@ namespace kap35 {
             }
 
         private:
-            text _content;
     };
 
 }

@@ -8,6 +8,8 @@
 #ifndef UNIQUE_PTR_HPP_
 #define UNIQUE_PTR_HPP_
 
+#include "kexceptions.hpp"
+
 namespace kap35 {
     template<typename T>
     class unique_ptr {
@@ -22,11 +24,13 @@ namespace kap35 {
             }
 
             T &get() {
+                if (_val == nullptr)
+                    throw exception("no value in unique ptr");
                 return *_val;
             }
 
         private:
-            T *_val;
+            T *_val = nullptr;
     };
 }
 

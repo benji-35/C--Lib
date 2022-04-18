@@ -110,8 +110,8 @@ namespace kap35 {
                 _chars = nullptr;
             }
 
-            unsigned int find(string const& str, unsigned int pos = 0, unsigned int end = -1) const {
-                if (end == -1)
+            unsigned int find(string const& str, unsigned int pos = 0, unsigned int end = 0) const {
+                if (end == 0)
                     end = size();
                 for (unsigned int i = pos; i < end; i++) {
                     unsigned int x = 0;
@@ -126,7 +126,7 @@ namespace kap35 {
                 return size();
             }
 
-            unsigned int find(char const& c, unsigned int pos = 0, unsigned int end = -1) const {
+            unsigned int find(char const& c, unsigned int pos = 0, unsigned int end = 0) const {
                 string str(c);
 
                 return find(str, pos, end);
@@ -280,6 +280,36 @@ namespace kap35 {
                 if (find(toFind, 0, size()) == size())
                     return false;
                 return true;
+            }
+
+            unsigned int nbOcurrenceOf(string str) {
+                unsigned int curr = 0;
+                unsigned int res = 0;
+
+                while (curr < size()) {
+                    curr += find(str, curr, 0);
+                    if (curr >= size())
+                        break;
+                    res++;
+                }
+
+                return res;
+            }
+
+            //change string
+            void advance(unsigned int ad) {
+                if (ad >= size()) {
+                    clear();
+                    return;
+                }
+                unsigned int nSize = size() - ad;
+                char *nStr = new char[nSize + 1]();
+
+                for (unsigned int i = 0; i < nSize; i++) {
+                    nStr[i] = _chars[i + ad];
+                }
+                nStr[nSize] = 0;
+                
             }
 
             //function toSomething
