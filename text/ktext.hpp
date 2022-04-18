@@ -165,17 +165,17 @@ namespace kap35
                 }
             }
 
+            friend std::ostream &operator<<(std::ostream & os, text const& str) {
+                for (unsigned int i = 0; i < str.size(); i++) {
+                    os << str.getC(i) << '\n';
+                }
+                return os;
+            }
+
         private:
             list<string> _text;
     };
 
-    std::ostream& operator<<(std::ostream& os, const text& dt) {
-        for (unsigned int i = 0; i < dt.size(); i++) {
-            os << dt.getC(i).toCharArray() << "\n";
-        }
-        return os;
-    }
-
-} // namespace kap35
+}
 
 #endif /* !KTEXT_HPP_ */

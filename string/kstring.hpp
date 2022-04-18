@@ -525,6 +525,11 @@ namespace kap35 {
                 return !(*this == cstr);
             }
 
+            friend std::ostream &operator<<(std::ostream & os, string const& str) {
+                os << str.toCharArray();
+                return os;
+            }
+
         private:
             void __realloc(unsigned int _size) {
                 char *_nchars = new char[_size + 1];
@@ -542,11 +547,6 @@ namespace kap35 {
 
             char *_chars = nullptr;
     };
-
-    std::ostream& operator<<(std::ostream& os, const string& dt) {
-        os << dt.toCharArray();
-        return os;
-    }
 
 }
 

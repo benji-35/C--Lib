@@ -19,15 +19,11 @@
 
 int main(int ac, char **av)
 {
-    kap35::file _file;
+    kap35::string str("Hello World !");
+    kap35::text txt;
 
-    _file.setPath("test.yml");
-    kap35::text txt = _file.openT();
-
-    txt.dump();
-    txt.removeEmptyLines();
-    std::cout << std::endl << std::endl;
-    txt.dump();
+    txt = str.split(" ");
+    std::cout << str << std::endl << txt << std::endl;
 
     return 0;
 }
