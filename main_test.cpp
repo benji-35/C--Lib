@@ -19,9 +19,15 @@
 
 int main(int ac, char **av)
 {
-    kap35::string str("Hello World !");
+    kap35::file _file;
 
-    std::cout << "nb o in " << str.toCharArray() << " = " << std::to_string(str.nbOcurrenceOf("o")) << std::endl;
+    _file.setPath("test.yml");
+    kap35::text txt = _file.openT();
+
+    txt.dump();
+    txt.removeEmptyLines();
+    std::cout << std::endl << std::endl;
+    txt.dump();
 
     return 0;
 }
