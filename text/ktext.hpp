@@ -167,7 +167,9 @@ namespace kap35
 
             friend std::ostream &operator<<(std::ostream & os, text const& str) {
                 for (unsigned int i = 0; i < str.size(); i++) {
-                    os << str.getC(i) << '\n';
+                    os << str.getC(i);
+                    if (i < str.size() - 1)
+                        os << '\n';
                 }
                 return os;
             }
