@@ -169,6 +169,13 @@ namespace kap35
             list<string> _text;
     };
 
+    std::ostream& operator<<(std::ostream& os, const text& dt) {
+        for (unsigned int i = 0; i < dt.size(); i++) {
+            os << dt.getC(i).toCharArray() << "\n";
+        }
+        return os;
+    }
+
 } // namespace kap35
 
 #endif /* !KTEXT_HPP_ */

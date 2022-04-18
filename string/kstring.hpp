@@ -543,6 +543,11 @@ namespace kap35 {
             char *_chars = nullptr;
     };
 
+    std::ostream& operator<<(std::ostream& os, const string& dt) {
+        os << dt.toCharArray();
+        return os;
+    }
+
 }
 
 #endif /* !KSTRING_HPP_ */
