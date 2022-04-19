@@ -68,12 +68,12 @@ namespace kap35 {
                 }
             }
 
-            string copy(unsigned int from, unsigned int to) {
+            string copy(unsigned int from = 0, unsigned int to = 0) {
                 string res;
 
                 if (from >= size())
                     return res;
-                if (to >= size())
+                if (to >= size() || to == 0)
                     to = size() - 1;
 
                 for (unsigned int i = from; i <= to; i++) {
@@ -296,6 +296,29 @@ namespace kap35 {
                 return res;
             }
 
+            bool startWith(string const& str) {
+                if (size() < str.size())
+                    return false;
+                for (unsigned int i = 0; i < str.size(); i++) {
+                    if ((*this)[i] != str[i])
+                        return false;
+                }
+                return true;
+            }
+
+            bool endWith(string const& str) {
+                unsigned int strSize = str.size();
+                unsigned int thisSize = size();
+
+                if (strSize > thisSize)
+                    return false;
+                for (unsigned int i = (thisSize - strSize); i < thisSize; i++) {
+                    if ((*this)[i] != str[i + thisSize])
+                        return false;
+                }
+                return true;
+            }
+
             //change string
             void advance(unsigned int ad) {
                 if (ad >= size()) {
@@ -433,7 +456,7 @@ namespace kap35 {
                 return *this;
             }
 
-            char &operator[](unsigned int index) {
+            char &operator[](unsigned int index) const {
                 if (index >= size()) {
                     throw exception("index out of range");
                 }

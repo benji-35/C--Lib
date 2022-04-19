@@ -111,6 +111,10 @@ namespace kap35
                 return *this;
             }
 
+            string &operator [](unsigned int index) const {
+                return getC(index);
+            }
+
             void add(string const& str) {
                 *this + str;
             }

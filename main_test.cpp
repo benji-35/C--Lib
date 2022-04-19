@@ -15,15 +15,19 @@
 #include "kfile.hpp"
 #include "kymlfile.hpp"
 
-#include <iostream>
-
 int main(int ac, char **av)
 {
-    kap35::string str("Hello World !");
-    kap35::text txt;
+    kap35::ymlFile yml("test.yml");
+    kap35::string str("testName");
 
-    txt = str.split(" ");
-    std::cout << str << std::endl << txt << std::endl;
+    if (ac > 1)
+        str = av[1];
+
+    try {
+        std::cout << "value of [" << str << "] = " << yml.get(str) << std::endl;
+    } catch(kap35::exception e) {
+        std::cout << "error kap35::exception: " << e.what() << std::endl;
+    }
 
     return 0;
 }
