@@ -17,16 +17,24 @@
 
 int main(int ac, char **av)
 {
-    kap35::ymlFile yml("test.yml");
-    kap35::string str("testName");
+    kap35::shared_ptr<int> shared;
+    kap35::shared_ptr<int> shared2;
 
-    if (ac > 1)
-        str = av[1];
+    shared = new int(12);
 
+    std::cout << std::to_string(shared.get()) << std::endl;
+
+    shared.clear();
+    shared2 = shared;
+    int i = -1;
     try {
-        std::cout << "value of [" << str << "] = " << yml.get(str) << std::endl;
+        i = shared2.get();
     } catch(kap35::exception e) {
-        std::cout << "error kap35::exception: " << e.what() << std::endl;
+        std::cout << "good: " << e.what() << std::endl;
+    }
+
+    if (i != -1) {
+        std::cout << "error: got (" << std::to_string(shared2.get()) << ")" << std::endl;
     }
 
     return 0;

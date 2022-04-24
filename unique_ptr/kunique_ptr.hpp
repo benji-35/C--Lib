@@ -29,7 +29,7 @@ namespace kap35 {
                 return *_val;
             }
 
-            bool isEmpty() {
+            bool isEmpty() const {
                 if (_val == nullptr)
                     return true;
                 return false;

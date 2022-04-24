@@ -36,6 +36,8 @@ namespace kap35
 
             shared_ptr &operator=(shared_ptr<T> const& ptr) {
                 clear();
+                if (ptr.isEmpty())
+                    return *this;
                 _val = ptr._val;
 
                 shared_ptr<T> *last = ptr.getLast();
@@ -76,7 +78,7 @@ namespace kap35
                 return *_val;
             }
 
-            bool isEmpty() {
+            bool isEmpty() const {
                 if (_val == nullptr)
                     return true;
                 return false;
