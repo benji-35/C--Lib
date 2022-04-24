@@ -72,7 +72,7 @@ namespace kap35
                 _hd->_after = _after;
             }
 
-            T &get() {
+            T &get() const {
                 if (isEmpty())
                     throw exception("no value in shared ptr");
                 return *_val;

@@ -23,7 +23,7 @@ namespace kap35 {
                 delete _val;
             }
 
-            T &get() {
+            T &get() const {
                 if (_val == nullptr)
                     throw exception("no value in unique ptr");
                 return *_val;
