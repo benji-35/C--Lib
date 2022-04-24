@@ -29,6 +29,12 @@ namespace kap35 {
                 return *_val;
             }
 
+            bool isEmpty() {
+                if (_val == nullptr)
+                    return true;
+                return false;
+            }
+
         private:
             T *_val = nullptr;
     };

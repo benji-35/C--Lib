@@ -71,9 +71,15 @@ namespace kap35
             }
 
             T &get() {
-                if (_val == nullptr)
+                if (isEmpty())
                     throw exception("no value in shared ptr");
                 return *_val;
+            }
+
+            bool isEmpty() {
+                if (_val == nullptr)
+                    return true;
+                return false;
             }
 
         private:
