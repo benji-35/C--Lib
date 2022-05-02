@@ -64,6 +64,72 @@ namespace kap35 {
             return res;
         }
 
+        static unsigned int hexaToUInt(string const& str) {
+            list<string> bits;
+
+            for (unsigned int i = 0; i < str.size(); i++) {
+                switch (str[i]) {
+                    case '0':
+                        bits.push_back("0000");
+                        break;
+                    case '1':
+                        bits.push_back("0001");
+                        break;
+                    case '2':
+                        bits.push_back("0010");
+                        break;
+                    case '3':
+                        bits.push_back("0011");
+                        break;
+                    case '4':
+                        bits.push_back("0100");
+                        break;
+                    case '5':
+                        bits.push_back("0101");
+                        break;
+                    case '6':
+                        bits.push_back("0110");
+                        break;
+                    case '7':
+                        bits.push_back("0111");
+                        break;
+                    case '8':
+                        bits.push_back("1000");
+                        break;
+                    case '9':
+                        bits.push_back("1001");
+                        break;
+                    case 'A':
+                        bits.push_back("1010");
+                        break;
+                    case 'B':
+                        bits.push_back("1011");
+                        break;
+                    case 'C':
+                        bits.push_back("1100");
+                        break;
+                    case 'D':
+                        bits.push_back("1101");
+                        break;
+                    case 'E':
+                        bits.push_back("1110");
+                        break;
+                    case 'F':
+                        bits.push_back("1111");
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            string bitsStr;
+
+            for (unsigned int i = 0; i < bits.size(); i++)
+                bitsStr += bits[i];
+
+            return binToUInt(bitsStr);
+        }
+
         static string intToHexa(unsigned int const& i) {
             string bin = intToBinary(i);
             string res = "";
@@ -87,18 +153,6 @@ namespace kap35 {
             }
 
             return res;
-        }
-
-        static bool sivisible(int const& nb, int const& div) {
-            return false;
-        }
-
-        static bool sivisible(unsigned int const& nb, unsigned int const& div) {
-            return false;
-        }
-
-        static bool sivisible(float const& nb, float const& div) {
-            return false;
         }
 
     };

@@ -23,7 +23,8 @@ int main(int ac, char **av)
     kap35::string bin = kap35::math::intToBinary(nb);
     kap35::string hex = kap35::math::intToHexa(nb);
 
-    std::cout << "nb: " << std::to_string(nb) << ", bin: " << bin << ", hexa: " << hex << std::endl;
+    std::cout << "nb: " << std::to_string(nb) << ", bin: " << bin << ", hexa: " << hex <<
+        " hexaint: " << kap35::math::hexaToUInt(hex) << " binint: " << kap35::math::binToUInt(bin) << std::endl;
 
     return 0;
 }
