@@ -13,6 +13,7 @@ INCLUDES	=	-I string/													\
 				-I unique_ptr/												\
 				-I map/														\
 				-I file/													\
+				-I math/													\
 
 LIBS	=	-lcriterion
 

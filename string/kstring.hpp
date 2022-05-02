@@ -204,6 +204,23 @@ namespace kap35 {
                 return _ltext;
             }
 
+            list<string> devide(unsigned int nbCharInLine) {
+                list<string> res;
+                unsigned int currChars = 0;
+
+                string tmp = "";
+                for (unsigned int i = 0; i < size(); i++) {
+                    tmp += (*this)[i];
+                    currChars++;
+                    if (currChars >= nbCharInLine) {
+                        res.push_back(tmp);
+                        tmp = "";
+                        currChars = 0;
+                    }
+                }
+                return res;
+            }
+
             void insert(string const& str, unsigned int pos = 0) {
                 int _size = size();
                 if (pos >= _size)
@@ -341,14 +358,12 @@ namespace kap35 {
                     clear();
                     return;
                 }
-                unsigned int nSize = size() - ad;
-                char *nStr = new char[nSize + 1]();
+                string str = "";
 
-                for (unsigned int i = 0; i < nSize; i++) {
-                    nStr[i] = _chars[i + ad];
+                for (unsigned int i = ad; i < size(); i++) {
+                    str += (*this)[i];
                 }
-                nStr[nSize] = 0;
-                
+                *this = str;
             }
 
             void inverse() {

@@ -14,28 +14,16 @@
 #include "klist.hpp"
 #include "kfile.hpp"
 #include "kymlfile.hpp"
+#include "kmath.hpp"
 
 int main(int ac, char **av)
 {
-    kap35::shared_ptr<int> shared;
-    kap35::shared_ptr<int> shared2;
+    int nb = 43;
 
-    shared = new int(12);
+    kap35::string bin = kap35::math::intToBinary(nb);
+    kap35::string hex = kap35::math::intToHexa(nb);
 
-    std::cout << std::to_string(shared.get()) << std::endl;
-
-    shared.clear();
-    shared2 = shared;
-    int i = -1;
-    try {
-        i = shared2.get();
-    } catch(kap35::exception e) {
-        std::cout << "good: " << e.what() << std::endl;
-    }
-
-    if (i != -1) {
-        std::cout << "error: got (" << std::to_string(shared2.get()) << ")" << std::endl;
-    }
+    std::cout << "nb: " << std::to_string(nb) << ", bin: " << bin << ", hexa: " << hex << std::endl;
 
     return 0;
 }
