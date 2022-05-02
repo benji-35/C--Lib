@@ -62,6 +62,12 @@ namespace kap35 {
                 *this = i;
             }
 
+            string(float const& f) {
+                _chars = new char[1]();
+                _chars[0] = 0;
+                *this = f;
+            }
+
             ~string() {
                 if (_chars != nullptr) {
                     delete [] _chars;
@@ -319,6 +325,16 @@ namespace kap35 {
                 return true;
             }
 
+            void remove(unsigned int pos) {
+                string tmp = copy(0, pos - 1);
+                string tmp2 = "";
+
+                if (pos < size() - 1)
+                    tmp2 = copy(pos + 1, size());
+                tmp += tmp2;
+                *this = tmp2;
+            }
+
             //change string
             void advance(unsigned int ad) {
                 if (ad >= size()) {
@@ -333,6 +349,15 @@ namespace kap35 {
                 }
                 nStr[nSize] = 0;
                 
+            }
+
+            void inverse() {
+                for (unsigned int i = 0; i < size() / 2; i++) {
+                    char c = _chars[i];
+                    unsigned int mirrorChar = size() - (1 + i);
+                    _chars[i] = _chars[mirrorChar];
+                    _chars[mirrorChar] = c;
+                }
             }
 
             //function toSomething
@@ -375,6 +400,41 @@ namespace kap35 {
                     res *= 10;
                     res += curr[startPos] - 48;
                 }
+                return res;
+            }
+
+            float toFloat(unsigned int pos = 0) {
+                float res = 0;
+                bool neg = false;
+                bool coma = false;
+                int comaId = 0;
+                if (_chars[pos] == '-') {
+                    neg = true;
+                    pos++;
+                }
+                for (unsigned int i = pos; i < size(); i++) {
+                    if (_chars[i] >= '0' && _chars[i] <= '9') {
+                        if (coma) {
+                            res *= 10;
+                            for (int x = 0; x < comaId; x++)
+                                res *= 10;
+                            res += _chars[i] - 48;
+                            res /= 10;
+                            for (int x = 0; x < comaId; x++)
+                                res /= 10;
+                            comaId++;
+                        } else {
+                            res *= 10;
+                            res += _chars[i] - 48;
+                        }
+                    } else if (_chars[i] == '.' && coma == false) {
+                        coma = true;
+                    } else {
+                        break;
+                    }
+                }
+                if (neg)
+                    res *= -1;
                 return res;
             }
 
@@ -423,6 +483,7 @@ namespace kap35 {
                     intStr += (char)((value % 10) + 48);
                     value /= 10;
                 }
+                intStr.inverse();
                 return intStr;
             }
 
@@ -430,10 +491,29 @@ namespace kap35 {
                 string intStr;
                 int value = i;
 
-                while (value >= 0) {
+                if (i == 0)
+                    return "0";
+
+                while (value > 0) {
                     intStr += (char)((value % 10) + 48);
+                    value /= 10;
                 }
+                intStr.inverse();
                 return intStr;
+            }
+
+            string operator+(float const& f) {
+                int beforeComa = (int)f;
+                float _f = f;
+                string intStr(beforeComa);
+
+                _f -= (float)beforeComa;
+                for (unsigned int i = 0; i < 6; i++)
+                    _f *= 10;
+                int afterComa = (int)_f;
+                string afterComaStr(afterComa);
+                string result = intStr + "." + afterComaStr;
+                return result;
             }
 
             string &operator<<(string const& str) {
@@ -453,6 +533,11 @@ namespace kap35 {
 
             string &operator<<(unsigned int const& i) {
                 *this = *this + i;
+                return *this;
+            }
+
+            string &operator<<(float const& f) {
+                *this = *this + f;
                 return *this;
             }
 
@@ -511,6 +596,14 @@ namespace kap35 {
                 return *this;
             }
 
+            string &operator=(float const& f) {
+                string fStr;
+
+                fStr += f;
+                *this = fStr;
+                return *this;
+            }
+
             string &operator+=(string const& str) {
                 return *this << str;
             }
@@ -525,6 +618,11 @@ namespace kap35 {
 
             string &operator+=(unsigned int const& i) {
                 return *this << i;
+            }
+
+            string &operator+=(float const& f) {
+                *this = *this + f;
+                return *this;
             }
 
             bool operator==(string const& str) {
