@@ -11,6 +11,7 @@
 #include "kstring.hpp"
 #include "ktext.hpp"
 #include "kfile.hpp"
+#include "kmap.hpp"
 
 namespace kap35 {
     class text;
@@ -29,34 +30,21 @@ namespace kap35 {
             }
 
             string get(string const& pathValue) {
-                string strPath = pathValue;
-                text txtPath(strPath.split("."));
-                unsigned int curr = 0;
+                string path = pathValue;
+                text txt = path.split(".");
+                string key = txt[txt.size() - 1];
 
-                if (!exists() || !pathValueExeists(pathValue))
-                    throw exception("value does not exist");
+                txt.remove(txt.size() - 1);
 
-                txtPath = string(pathValue).split(".");
-                text txt;
-                txt = openT();
+                string gPath = txt.toString(".");
+                
+                map<string, string> got = getContentOfPath(gPath);
 
-                for (unsigned int i = 0; i < txt.size(); i++) {
-                    string tryStr;
-
-                    for (unsigned int x = 0; x < curr; x++)
-                        tryStr += "  ";
-                    tryStr += txtPath.get(curr) + ":";
-                    if (txt.get(i).startWith(tryStr)) {
-                        if (curr == pathValue.size()) {
-                            text values;
-                            values = txt.get(i).split((tryStr + " "), 2);
-                            return values[1].copy();
-                        }
-                        curr++;
-                    }
+                if (!got.keyExists(key)) {
+                    throw exception("no key found");
+                } else {
+                    return got.get(key);
                 }
-
-                throw exception("value does not exist");
             }
 
             bool getBool(string const& pathValue) {
@@ -108,9 +96,17 @@ namespace kap35 {
                 return res;
             }
 
+            map<string, string>getContentOfPath(string const& pathValue) {
+                text txt = openT();
+                map<string, string> res;
+
+                if (txt.size() == 0)
+                    return res;
+                
+            }
+
         private:
     };
-
 }
 
 #endif /* !KYMLFILE_HPP_ */

@@ -204,7 +204,7 @@ namespace kap35 {
                 return _ltext;
             }
 
-            list<string> devide(unsigned int nbCharInLine) {
+            list<string> divide(unsigned int nbCharInLine) {
                 list<string> res;
                 unsigned int currChars = 0;
 
@@ -514,7 +514,10 @@ namespace kap35 {
                     value /= 10;
                 }
                 intStr.inverse();
-                return intStr;
+
+                string tmp = *this;
+                tmp += intStr;
+                return tmp;
             }
 
             string operator+(float const& f) {

@@ -9,18 +9,18 @@
 #define KMATH_HPP_
 
 #include "kstring.hpp"
+#include "klist.hpp"
 
 namespace kap35 {
     class string;
-} // namespace kap35
-
+}
 
 namespace kap35 {
-    
+
     class math {
         public:
 
-        static string intToBinary(unsigned int const& i) {
+        static string uintToBinary(unsigned int const& i) {
             string res;
             unsigned int d = 1;
             unsigned int tmpI = i;
@@ -130,8 +130,8 @@ namespace kap35 {
             return binToUInt(bitsStr);
         }
 
-        static string intToHexa(unsigned int const& i) {
-            string bin = intToBinary(i);
+        static string uintToHexa(unsigned int const& i) {
+            string bin = uintToBinary(i);
             string res = "";
 
             while (bin.size() % 4) {
@@ -140,7 +140,7 @@ namespace kap35 {
                 bin = tmpBin;
             }
 
-            list<string> bits = bin.devide(4);
+            list<string> bits = bin.divide(4);
 
             for (unsigned int bit = 0; bit < bits.size(); bit++) {
                 unsigned int binInt = binToUInt(bits[bit]);
@@ -155,9 +155,62 @@ namespace kap35 {
             return res;
         }
 
-    };
-    
-} // namespace kap35
+        static string uintToOctal(unsigned int const& i) {
+            string res;
+            string bin = uintToBinary(i);
+            while (bin.size() % 3) {
+                string tmpBin = "0";
+                tmpBin += bin;
+                bin = tmpBin;
+            }
+            
+            list<string> bins = bin.divide(3);
 
+            for (unsigned int i = 0; i < bins.size(); i++) {
+                string tmpInt(octalFrom3Bin(bins[i]));
+
+                res += tmpInt;
+            }
+
+            return res;
+        }
+
+        static unsigned int octalToUint(string const& str) {
+            string bin = "";
+
+            for (unsigned int i = 0; i < str.size(); i++) {
+                bin += binFrom1Octal(str[i]);
+            }
+
+            return binToUInt(bin);
+        }
+
+        private:
+            static unsigned int octalFrom3Bin(string const& bin) {
+                return binToUInt(bin);
+            }
+
+            static string binFrom1Octal(char const& octal) {
+                switch (octal) {
+                case '1':
+                    return "001";
+                case '2':
+                    return "010";
+                case '3':
+                    return "011";
+                case '4':
+                    return "100";
+                case '5':
+                    return "101";
+                case '6':
+                    return "110";
+                case '7':
+                    return "111";
+                default:
+                    return "000";
+                }
+            }
+    };   
+}
 
 #endif /* !KMATH_HPP_ */
