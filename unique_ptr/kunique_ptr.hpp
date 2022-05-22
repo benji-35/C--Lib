@@ -25,7 +25,7 @@ namespace kap35 {
 
             T &get() const {
                 if (_val == nullptr)
-                    throw exception("no value in unique ptr");
+                    throw Exception::UniquePointerError("no value in unique ptr");
                 return *_val;
             }
 

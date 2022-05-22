@@ -26,8 +26,7 @@ namespace kap35
                 _text.push_back("");
             }
             text(string const& str) {
-                string _str = str;
-                _text.push_back(_str);
+                _text.push_back(str);
             }
             text(string const& str, string splitter, int nb = -1) {
                 string _str = str;
@@ -47,10 +46,14 @@ namespace kap35
             }
 
             string &get(unsigned int index) {
+                if (index >= size())
+                    throw Exception::TextError(string("index out of range").toCharArray());
                 return _text.at(index);
             }
 
             string &getC(unsigned int index) const {
+                if (index >= size())
+                    throw Exception::TextError(string("index out of range").toCharArray());
                 return _text.get(index);
             }
 
@@ -162,7 +165,6 @@ namespace kap35
                         back = false;
                     }
                     if (get(i) == "") {
-                        std::cout << "remove line " << std::to_string(i) << std::endl;
                         remove(i);
                         back = true;
                     }

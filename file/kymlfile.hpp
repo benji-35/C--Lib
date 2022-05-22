@@ -35,27 +35,14 @@ namespace kap35 {
                 string key = txt[txt.size() - 1];
 
                 txt.remove(txt.size() - 1);
-
                 string gPath = txt.toString(".");
-                
                 map<string, string> got = getContentOfPath(gPath);
 
-                if (!got.keyExists(key)) {
-                    throw exception("no key found");
-                } else {
-                    return got.get(key);
-                }
+                return got.get(key);
             }
 
             bool getBool(string const& pathValue) {
-                string strRes;
-
-                try {
-                    strRes = get(pathValue);
-                } catch(exception e) {
-                    throw exception(e.what());
-                }
-
+                string strRes = get(pathValue);
                 strRes.toLower();
                 if (strRes == "1" || strRes == "true")
                     return true;
@@ -63,14 +50,7 @@ namespace kap35 {
             }
 
             int getInt(string const& pathValue) {
-                string strRes;
-
-                try {
-                    strRes = get(pathValue);
-                } catch(exception e) {
-                    throw exception(e.what());
-                }
-
+                string strRes = get(pathValue);
                 return strRes.toInt();
             }
 

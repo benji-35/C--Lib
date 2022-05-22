@@ -9,11 +9,9 @@
 #define MAP_HPP_
 
 #include "klist.hpp"
-#include "kexceptions.hpp"
 #include <iostream>
 
 namespace kep35 {
-    class exception;
     class list;
 }
 
@@ -48,7 +46,8 @@ namespace kap35 {
                         return tmp->_cont;
                     tmp = tmp->_next;
                 }
-                throw exception("no key found");
+                char msg[13] = {'n', 'o', ' ', 'k', 'e', 'y', ' ', 'f', 'o', 'u', 'n', 'd', 0};
+                throw Exception::MapError(msg);
             }
 
             bool keyExists(KEY const& k) {

@@ -9,12 +9,8 @@
 #define KSTRING_HPP_
 
 #include "klist.hpp"
-#include "kexceptions.hpp"
 #include <iostream>
-
-namespace kap35 {
-    class exception;
-}
+#include <unistd.h>
 
 namespace kap35 {
 
@@ -561,7 +557,7 @@ namespace kap35 {
 
             char &operator[](unsigned int index) const {
                 if (index >= size()) {
-                    throw exception("index out of range");
+                    throw Exception::StringError(string("index out of range").toCharArray());
                 }
                 return _chars[index];
             }
@@ -667,6 +663,19 @@ namespace kap35 {
             friend std::ostream &operator<<(std::ostream & os, string const& str) {
                 os << str.toCharArray();
                 return os;
+            }
+
+            static string readFd(int fd = 1, char endChar = '\n') {
+                string res = "";
+                while (1) {
+                    char *c = nullptr;
+                    if (read(fd, c, 1) == -1)
+                        break;
+                    if (c == nullptr)
+                        break;
+                    res += c;
+                }
+                return res;
             }
 
         private:

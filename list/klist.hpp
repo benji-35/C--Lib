@@ -9,11 +9,8 @@
 #define KLIST_HPP_
 
 #include "kexceptions.hpp"
+#include "kshared_ptr.hpp"
 #include <iostream>
-
-namespace kap35 {
-    class exception;
-}
 
 namespace kap35 {
     template<typename T>
@@ -21,10 +18,10 @@ namespace kap35 {
         public:
             struct node_list {
                 T _val;
-                node_list *_next;
-                node_list *_before;
+                shared_ptr<node_list> _next;
+                shared_ptr<node_list> _before;
 
-                node_list(T val, node_list *before = nullptr, node_list *next = nullptr) {
+                node_list(T val, shared_ptr<node_list> before, shared_ptr<node_list> next) {
                     _val = val;
                     _next = next;
                     _before = before;
@@ -46,42 +43,32 @@ namespace kap35 {
             void insert(unsigned int const& index, T val) {
                 unsigned int _index = index;
                 if (_index == 0) {
-                    node_list *n = new node_list(val, nullptr, _list);
+                    shared_ptr<node_list> n = new node_list(val, nullptr, _list);
                     if (_list != nullptr) {
-                        _list->_before = n;
+                        _list.get()._before = n;
                     }
                     _list = n;
                     return;
                 }
                 if (_index == size()) {
-                    node_list *_last = getLast();
-                    _last->_next = new node_list(val, _last, nullptr);
+                    shared_ptr<node_list> _last = getLast();
+                    _last.get()._next = new node_list(val, _last, nullptr);
                     return;
                 }
-                node_list *tmp = _list;
-                while (_index > 0 || tmp->_next == nullptr) {
+                shared_ptr<node_list> tmp = _list;
+                while (_index > 0 || tmp.get()._next == nullptr) {
                     _index--;
                 }
-                node_list *n = new node_list(val, tmp, tmp->_next);
-                tmp->_next = n;
+                shared_ptr<node_list> n = new node_list(val, tmp, tmp.get()._next);
+                tmp.get()._next = n;
             }
 
             void pop_back() {
-                node_list *_last = getLast();
-
-                if (_last == nullptr)
-                    return;
-                delete _last;
-                _list = _last->_before;
+                pop_at(size() - 1);
             }
 
             void pop_front() {
-                node_list *_lhd = _list;
-
-                delete _lhd;
-
-                _list = _list->_next;
-                _list->_before = nullptr;
+                pop_at(0);
             }
 
             void pop_at(unsigned int index) {
@@ -89,67 +76,63 @@ namespace kap35 {
                     return pop_front();
                 if (index >= size() - 1)
                     return pop_back();
-                node_list *tmp = _list;
+                shared_ptr<node_list> tmp = _list;
                 while (index > 0) {
-                    tmp = tmp->_next;
+                    tmp = tmp.get()._next;
                     index--;
                 }
-                ((node_list *)tmp->_before)->_next = tmp->_next;
-                delete tmp;
+                ((shared_ptr<node_list>)tmp.get()._before).get()._next = tmp.get()._next;
+                tmp.destroy();
             }
 
             unsigned int size() const {
-                node_list *tmp = _list;
+                shared_ptr<node_list> tmp = _list;
                 unsigned int res = 0;
 
-                if (tmp == nullptr)
+                if (tmp.isEmpty())
                     return 0;
-                while (tmp) {
-                    tmp = tmp->_next;
+                while (!tmp.isEmpty()) {
+                    tmp = (shared_ptr<node_list>)((node_list &)tmp.get())._next;
                     res++;
                 }
                 return res;
             }
 
             void clear() {
-                node_list *tmp = _list;
-                node_list *nxt;
+                shared_ptr<node_list> tmp = _list;
+                shared_ptr<node_list> nxt;
 
-                if (_list == nullptr || tmp == nullptr) {
-                    _list = nullptr;
+                if (_list.isEmpty() || tmp.isEmpty()) {
+                    _list.destroy();
                     return;
                 }
-                while (tmp) {
-                    nxt = tmp->_next;
-                    delete tmp;
+                while (!tmp.isEmpty()) {
+                    nxt = tmp.get()._next;
+                    tmp.destroy();
                     tmp = nxt;
                 }
                 _list = nullptr;
             }
 
             T& at(unsigned int index) {
-                if (index >= size()) {
-                    throw exception("index out of range");
-                }
-                node_list *tmp = _list;
-                while (index > 0) {
-                    tmp = tmp->_next;
-                    index--;
-                }
-                return tmp->_val;
+                return get(index);
             }
 
             T& get(unsigned int index) const {
-                node_list *tmp = _list;
+                shared_ptr<node_list> tmp;
+
+                tmp = _list;
                 while (index > 0) {
-                    tmp = tmp->_next;
-                    if (tmp == nullptr)
+                    tmp = ((node_list &)tmp.get())._next;
+                    if (tmp.isEmpty())
                         break;
                     index--;
                 }
-                if (tmp == nullptr)
-                    throw exception("index out of range");
-                return tmp->_val;
+                if (tmp.isEmpty()) {
+                    char msg[19] = {'i', 'n', 'd', 'e', 'x', ' ', 'o', 'u', 't', ' ', 'o', 'f', ' ', 'r', 'a', 'n', 'g', 'e', 0};
+                    throw Exception::ListError(msg);
+                }
+                return tmp.get()._val;
             }
 
             list<T> &operator=(list<T> const& l) {
@@ -165,16 +148,16 @@ namespace kap35 {
             }
 
         private:
-            node_list *getLast() {
-                if (_list == nullptr)
+            shared_ptr<node_list> getLast() {
+                if (_list.isEmpty())
                     return nullptr;
-                node_list *tmp = _list;
-                while (tmp->_next != nullptr)
-                    tmp = tmp->_next;
+                shared_ptr<node_list> tmp = _list;
+                while (tmp.get()._next != nullptr)
+                    tmp = tmp.get()._next;
                 return tmp;
             }
 
-            node_list *_list = nullptr;
+            shared_ptr<node_list> _list;
     };
 
 }

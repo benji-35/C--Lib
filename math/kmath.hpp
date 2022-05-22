@@ -25,6 +25,8 @@ namespace kap35 {
             unsigned int d = 1;
             unsigned int tmpI = i;
 
+            if (i == 0)
+                return "0";
             while (d < i)
                 d *= 2;
 
@@ -183,6 +185,89 @@ namespace kap35 {
             }
 
             return binToUInt(bin);
+        }
+
+        static string uintToViceminal(unsigned int const& i) {
+            return "";
+        }
+
+        static string uintToTrentadal(unsigned int const& i) {
+            string res = "";
+            string bin = uintToBinary(i);
+
+            while (bin.size() % 35) {
+                string tmpStr = "0";
+
+                tmpStr += bin;
+                bin = tmpStr;
+            }
+            list<string> bins = bin.divide(5);
+            for (unsigned int i = 0; i < bins.size(); i++) {
+                unsigned int valBin = binToUInt(bins[i]);
+                if (valBin < 10) {
+                    res += (char)(valBin + 48);
+                } else {
+                    res += (char)(valBin + 55);
+                }
+            }
+
+            while (res.size() > 1) {
+                if (res[0] != '0')
+                    break;
+                res.remove(0);
+            }
+            return res;
+        }
+
+        static unsigned int trentadalToUint(string const& str) {
+            string bin;
+
+            for (unsigned int i = 0; i < str.size(); i++) {
+                string sstr = "";
+                if (str[i] >= '0' && str[i] <= '9') {
+                    sstr = uintToBinary(str[i] - 48);
+                } else if (str[i] >= 'A' && str[i] <= 'V') {
+                    sstr = uintToBinary(str[i] - 55);
+                } else {
+                    return binToUInt(bin);
+                }
+
+                while (sstr.size() < 5) {
+                    string ssstr = "0";
+                    ssstr += sstr;
+                    sstr = ssstr;
+                }
+
+                bin += sstr;
+            }
+            return binToUInt(bin);
+        }
+
+        static string addBinary(string const& b1, string const& b2) {
+            unsigned int r1 = binToUInt(b1);
+            unsigned int r2 = binToUInt(b2);
+
+            unsigned int r3 = r1 + r2;
+
+            return uintToBinary(r3);
+        }
+
+        static string addHexa(string const& h1, string const& h2) {
+            unsigned int r1 = hexaToUInt(h1);
+            unsigned int r2 = hexaToUInt(h2);
+
+            unsigned int r3 = r1 + r2;
+
+            return uintToHexa(r3);
+        }
+
+        static string addOctal(string const& o1, string const& o2) {
+            unsigned int r1 = octalToUint(o1);
+            unsigned int r2 = octalToUint(o2);
+
+            unsigned int r3 = r1 + r2;
+
+            return uintToOctal(r3);
         }
 
         private:

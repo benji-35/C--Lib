@@ -10,6 +10,12 @@
 
 #include "kexceptions.hpp"
 
+namespace kap35 {
+    namespace Exception {
+        class SharedPointerError;
+    }
+}
+
 namespace kap35
 {
     template<typename T>
@@ -55,6 +61,22 @@ namespace kap35
                 return *this;
             }
 
+            bool operator==(shared_ptr<T> const& val) const {
+                return (val._val == _val);
+            }
+
+            bool operator!=(shared_ptr<T> const& val) const {
+                return (val._val != _val);
+            }
+
+            bool operator==(T* val) const {
+                return (val == _val);
+            }
+
+            bool operator!=(T* val) const {
+                return (val != _val);
+            }
+
             void clear() {
                 if (_hd == nullptr && _after == nullptr) {
                     if (_val != nullptr) {
@@ -73,8 +95,10 @@ namespace kap35
             }
 
             T &get() const {
-                if (isEmpty())
-                    throw exception("no value in shared ptr");
+                if (isEmpty()) {
+                    char msg[23] = {'n', 'o', ' ', 'v', 'a', 'l', 'u', 'e', ' ', 'i', 'n', ' ', 's', 'h', 'a', 'r', 'e', 'd', ' ', 'p', 't', 'r', 0};
+                    throw Exception::SharedPointerError(msg);
+                }
                 return *_val;
             }
 
@@ -82,6 +106,13 @@ namespace kap35
                 if (_val == nullptr)
                     return true;
                 return false;
+            }
+
+            void destroy() {
+                if (!_after->isEmpty()) {
+                    _after->destroy();
+                }
+                clear();
             }
 
         private:
