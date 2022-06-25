@@ -14,6 +14,7 @@ INCLUDES	=	-I string/													\
 				-I map/														\
 				-I file/													\
 				-I math/													\
+				-I Utils/													\
 
 LIBS	=	-lcriterion
 
@@ -28,7 +29,7 @@ BIN_NAME	=	run_test
 
 %.o: %.cpp
 	@echo "$(BIN_NAME) > [CPP: $<]"
-	@g++ -c $< $(INCLUDES) -o $@
+	@g++ -c $< $(INCLUDES) -o $@ -g
 
 all:	tests
 

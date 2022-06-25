@@ -11,6 +11,7 @@
 #include "klist.hpp"
 #include <iostream>
 #include <unistd.h>
+#include "kutils.hpp"
 
 namespace kap35 {
 
@@ -52,7 +53,7 @@ namespace kap35 {
                 *this = i;
             }
 
-            string(unsigned int const& i) {
+            string(size_t const& i) {
                 _chars = new char[1]();
                 _chars[0] = 0;
                 *this = i;
@@ -70,7 +71,7 @@ namespace kap35 {
                 }
             }
 
-            string copy(unsigned int from = 0, unsigned int to = 0) {
+            string copy(size_t from = 0, size_t to = 0) {
                 string res;
 
                 if (from >= size())
@@ -78,7 +79,7 @@ namespace kap35 {
                 if (to >= size() || to == 0)
                     to = size() - 1;
 
-                for (unsigned int i = from; i <= to; i++) {
+                for (size_t i = from; i <= to; i++) {
                     res += (*this)[i];
                 }
 
@@ -89,7 +90,7 @@ namespace kap35 {
                 return _chars;
             }
 
-            unsigned int size() const {
+            size_t size() const {
                 unsigned res = 0;
 
                 if (_chars == nullptr)
@@ -112,11 +113,11 @@ namespace kap35 {
                 _chars = nullptr;
             }
 
-            unsigned int find(string const& str, unsigned int pos = 0, unsigned int end = 0) const {
+            size_t find(string const& str, size_t pos = 0, size_t end = 0) const {
                 if (end == 0)
                     end = size();
-                for (unsigned int i = pos; i < end; i++) {
-                    unsigned int x = 0;
+                for (size_t i = pos; i < end; i++) {
+                    size_t x = 0;
                     for (; x < str.size(); x++) {
                         if (str.at(x) != (*this).at(i + x))
                             break;
@@ -128,7 +129,7 @@ namespace kap35 {
                 return size();
             }
 
-            unsigned int find(char const& c, unsigned int pos = 0, unsigned int end = 0) const {
+            size_t find(char const& c, size_t pos = 0, size_t end = 0) const {
                 string str(c);
 
                 return find(str, pos, end);
@@ -136,20 +137,20 @@ namespace kap35 {
 
             list<string> split(string splitter, int nbSplits = -1) {
                 list<string> _ltext;
-                unsigned int curr = 0;
-                unsigned int found = 0;
-                unsigned int sizeSplitter = splitter.size();
+                size_t curr = 0;
+                size_t found = 0;
+                size_t sizeSplitter = splitter.size();
 
-                while (curr < size()) {
+                while (curr <= size()) {
                     if (nbSplits == 0) {
-                        _ltext.at(_ltext.size() - 1) += copy(curr - 1, size());
+                        _ltext.pushBack(copy(curr - 1, size()));
                         break;
                     }
                     found = find(splitter, curr);
                     if (found != 0 && found != size()) {
-                        _ltext.push_back(copy(curr, found - 1));
+                        _ltext.pushBack(copy(curr, found - 1));
                     } else {
-                        _ltext.push_back(copy(curr, size()));
+                        _ltext.pushBack(copy(curr, size()));
                     }
                     curr += _ltext.at(_ltext.size() - 1).size() + sizeSplitter;
                     nbSplits--;
@@ -160,15 +161,15 @@ namespace kap35 {
             list<string> ssplit(list<string> const& _splitters, int nbSplits = -1) {
                 list<string> _ltext;
                 list<string> splitters;
-                unsigned int curr = 0;
-                unsigned int found = 0;
+                size_t curr = 0;
+                size_t found = 0;
 
                 int indexLower = 0;
 
                 splitters = _splitters;
 
                 if (splitters.size() == 0) {
-                    _ltext.push_back(*this);
+                    _ltext.pushBack(*this);
                     return _ltext;
                 }
 
@@ -178,9 +179,9 @@ namespace kap35 {
                         break;
                     }
                     indexLower = 0;
-                    for (unsigned int i = 0; i < splitters.size(); i++) {
+                    for (size_t i = 0; i < splitters.size(); i++) {
                         if (i > 0) {
-                            unsigned int tmpFound = find(splitters.at(i), curr);
+                            size_t tmpFound = find(splitters.at(i), curr);
                             if (tmpFound < found) {
                                 found = tmpFound;
                                 indexLower = i;
@@ -190,9 +191,9 @@ namespace kap35 {
                         }
                     }
                     if (found != 0 && found != size()) {
-                        _ltext.push_back(copy(curr, found - 1));
+                        _ltext.pushBack(copy(curr, found - 1));
                     } else {
-                        _ltext.push_back(copy(curr, size()));
+                        _ltext.pushBack(copy(curr, size()));
                     }
                     curr += _ltext.at(_ltext.size() - 1).size() + splitters.at(indexLower).size();
                     nbSplits--;
@@ -200,16 +201,16 @@ namespace kap35 {
                 return _ltext;
             }
 
-            list<string> divide(unsigned int nbCharInLine) {
+            list<string> divide(size_t nbCharInLine) {
                 list<string> res;
-                unsigned int currChars = 0;
+                size_t currChars = 0;
 
                 string tmp = "";
-                for (unsigned int i = 0; i < size(); i++) {
+                for (size_t i = 0; i < size(); i++) {
                     tmp += (*this)[i];
                     currChars++;
                     if (currChars >= nbCharInLine) {
-                        res.push_back(tmp);
+                        res.pushBack(tmp);
                         tmp = "";
                         currChars = 0;
                     }
@@ -217,7 +218,7 @@ namespace kap35 {
                 return res;
             }
 
-            void insert(string const& str, unsigned int pos = 0) {
+            void insert(string const& str, size_t pos = 0) {
                 int _size = size();
                 if (pos >= _size)
                     pos = _size - 1;
@@ -225,16 +226,16 @@ namespace kap35 {
                     *this = str;
                     return;
                 }
-                unsigned int nsize = _size + str.size() + 1;
+                size_t nsize = _size + str.size() + 1;
 
                 char *nstr = new char[nsize];
-                for (unsigned int i = 0; i < pos; i++) {
+                for (size_t i = 0; i < pos; i++) {
                     nstr[i] = _chars[i];
                 }
-                for (unsigned int i = 0; i < str.size(); i++) {
+                for (size_t i = 0; i < str.size(); i++) {
                     nstr[i + pos] = str.at(i);
                 }
-                for (unsigned int i = pos; i < size(); i++) {
+                for (size_t i = pos; i < size(); i++) {
                     nstr[i + str.size()] = _chars[i];
                 }
             }
@@ -242,31 +243,31 @@ namespace kap35 {
             list<string> getWords() {
                 list<string> seperators;
 
-                seperators.push_back(" ");
-                seperators.push_back("\t");
-                seperators.push_back("\n");
-                seperators.push_back("\r");
-                seperators.push_back("\a");
-                seperators.push_back("\b");
-                seperators.push_back("\v");
-                seperators.push_back("\f");
+                seperators.pushBack(" ");
+                seperators.pushBack("\t");
+                seperators.pushBack("\n");
+                seperators.pushBack("\r");
+                seperators.pushBack("\a");
+                seperators.pushBack("\b");
+                seperators.pushBack("\v");
+                seperators.pushBack("\f");
 
                 return ssplit(seperators);
             }
 
-            void insert(char const& c, unsigned int pos = 0) {
+            void insert(char const& c, size_t pos = 0) {
                 insert(string(c), pos);
             }
 
-            char &at(unsigned int index) const {
-                unsigned int _size = size();
+            char &at(size_t index) const {
+                size_t _size = size();
                 if (index >= _size)
                     return _chars[_size - 1];
                 return _chars[index];
             }
 
             void toUpper() {
-                for (unsigned int i = 0; i < size(); i++) {
+                for (size_t i = 0; i < size(); i++) {
                     if (_chars[i] >= 'a' && _chars[i] <= 'z') {
                         _chars[i] -= 32;
                     }
@@ -274,7 +275,7 @@ namespace kap35 {
             }
 
             void toLower() {
-                for (unsigned int i = 0; i < size(); i++) {
+                for (size_t i = 0; i < size(); i++) {
                     if (_chars[i] >= 'A' && _chars[i] <= 'Z') {
                         _chars[i] += 32;
                     }
@@ -295,15 +296,15 @@ namespace kap35 {
                 return res;
             }
 
-            bool isInString(string toFind) const {
+            bool isInstring(string toFind) const {
                 if (find(toFind, 0, size()) == size())
                     return false;
                 return true;
             }
 
-            unsigned int nbOcurrenceOf(string str) {
-                unsigned int curr = 0;
-                unsigned int res = 0;
+            size_t nbOcurrenceOf(string str) {
+                size_t curr = 0;
+                size_t res = 0;
 
                 while (curr < size()) {
                     curr += find(str, curr, 0);
@@ -318,7 +319,7 @@ namespace kap35 {
             bool startWith(string const& str) {
                 if (size() < str.size())
                     return false;
-                for (unsigned int i = 0; i < str.size(); i++) {
+                for (size_t i = 0; i < str.size(); i++) {
                     if ((*this)[i] != str[i])
                         return false;
                 }
@@ -326,19 +327,19 @@ namespace kap35 {
             }
 
             bool endWith(string const& str) {
-                unsigned int strSize = str.size();
-                unsigned int thisSize = size();
+                size_t strSize = str.size();
+                size_t thisSize = size();
 
                 if (strSize > thisSize)
                     return false;
-                for (unsigned int i = (thisSize - strSize); i < thisSize; i++) {
+                for (size_t i = (thisSize - strSize); i < thisSize; i++) {
                     if ((*this)[i] != str[i + thisSize])
                         return false;
                 }
                 return true;
             }
 
-            void remove(unsigned int pos) {
+            void remove(size_t pos) {
                 string tmp = copy(0, pos - 1);
                 string tmp2 = "";
 
@@ -349,23 +350,23 @@ namespace kap35 {
             }
 
             //change string
-            void advance(unsigned int ad) {
+            void advance(size_t ad) {
                 if (ad >= size()) {
                     clear();
                     return;
                 }
                 string str = "";
 
-                for (unsigned int i = ad; i < size(); i++) {
+                for (size_t i = ad; i < size(); i++) {
                     str += (*this)[i];
                 }
                 *this = str;
             }
 
             void inverse() {
-                for (unsigned int i = 0; i < size() / 2; i++) {
+                for (size_t i = 0; i < size() / 2; i++) {
                     char c = _chars[i];
-                    unsigned int mirrorChar = size() - (1 + i);
+                    size_t mirrorChar = size() - (1 + i);
                     _chars[i] = _chars[mirrorChar];
                     _chars[mirrorChar] = c;
                 }
@@ -373,7 +374,7 @@ namespace kap35 {
 
             //function toSomething
 
-            int toInt(unsigned int pos = 0) {
+            int toInt(size_t pos = 0) {
                 int res = 0;
                 bool neg = false;
                 string curr(*this);
@@ -381,7 +382,7 @@ namespace kap35 {
                 if (curr.size() == 0 || curr.size() <= pos) {
                     return res;
                 }
-                unsigned int startPos = pos;
+                size_t startPos = pos;
                 if (curr.size() >= pos + 2 && curr[pos] == '-') {
                     neg = true;
                     startPos = pos + 1;
@@ -397,14 +398,14 @@ namespace kap35 {
                 return res;
             }
 
-            unsigned int toUInt(unsigned int pos = 0) {
-                unsigned int res = 0;
+            size_t toUInt(size_t pos = 0) {
+                size_t res = 0;
                 string curr(*this);
 
                 if (curr.size() == 0 || curr.size() <= pos) {
                     return res;
                 }
-                unsigned int startPos = pos;
+                size_t startPos = pos;
                 for (; startPos < curr.size(); startPos++) {
                     if (curr[startPos] < '0' || curr[startPos] > '9')
                         break;
@@ -414,7 +415,7 @@ namespace kap35 {
                 return res;
             }
 
-            float toFloat(unsigned int pos = 0) {
+            float toFloat(size_t pos = 0) {
                 float res = 0;
                 bool neg = false;
                 bool coma = false;
@@ -423,7 +424,7 @@ namespace kap35 {
                     neg = true;
                     pos++;
                 }
-                for (unsigned int i = pos; i < size(); i++) {
+                for (size_t i = pos; i < size(); i++) {
                     if (_chars[i] >= '0' && _chars[i] <= '9') {
                         if (coma) {
                             res *= 10;
@@ -498,7 +499,7 @@ namespace kap35 {
                 return intStr;
             }
 
-            string operator+(unsigned int const& i) {
+            string operator+(size_t const& i) {
                 string intStr;
                 int value = i;
 
@@ -522,7 +523,7 @@ namespace kap35 {
                 string intStr(beforeComa);
 
                 _f -= (float)beforeComa;
-                for (unsigned int i = 0; i < 6; i++)
+                for (size_t i = 0; i < 6; i++)
                     _f *= 10;
                 int afterComa = (int)_f;
                 string afterComaStr(afterComa);
@@ -545,7 +546,7 @@ namespace kap35 {
                 return *this;
             }
 
-            string &operator<<(unsigned int const& i) {
+            string &operator<<(size_t const& i) {
                 *this = *this + i;
                 return *this;
             }
@@ -555,7 +556,7 @@ namespace kap35 {
                 return *this;
             }
 
-            char &operator[](unsigned int index) const {
+            char &operator[](size_t index) const {
                 if (index >= size()) {
                     throw Exception::StringError(string("index out of range").toCharArray());
                 }
@@ -565,7 +566,7 @@ namespace kap35 {
             string &operator=(string const& str) {
                 clear();
                 __realloc(str.size());
-                for (unsigned int i = 0; i < str.size(); i++) {
+                for (size_t i = 0; i < str.size(); i++) {
                     _chars[i] = str._chars[i];
                 }
                 _chars[str.size()] = 0;
@@ -602,7 +603,7 @@ namespace kap35 {
                 return *this;
             }
 
-            string &operator=(unsigned int const& i) {
+            string &operator=(size_t const& i) {
                 string intStr;
 
                 intStr += i;
@@ -630,7 +631,7 @@ namespace kap35 {
                 return *this << i;
             }
 
-            string &operator+=(unsigned int const& i) {
+            string &operator+=(size_t const& i) {
                 return *this << i;
             }
 
@@ -640,7 +641,7 @@ namespace kap35 {
             }
 
             bool operator==(string const& str) {
-                for (unsigned int i = 0; i < size(); i++) {
+                for (size_t i = 0; i < size(); i++) {
                     if ((*this)[i] != str._chars[i])
                         return false;
                 }
@@ -661,6 +662,8 @@ namespace kap35 {
             }
 
             friend std::ostream &operator<<(std::ostream & os, string const& str) {
+                if (str.toCharArray() == nullptr)
+                    return os;
                 os << str.toCharArray();
                 return os;
             }

@@ -15,7 +15,7 @@ Test(shared_ptr, first_test)
 {
     kap35::shared_ptr<int> _sptr;
     _sptr = new int(12);
-    cr_assert(_sptr.get() == 12, "Error: want[12] and got[%d]\n", _sptr.get());
+    cr_assert(*_sptr.get() == 12, "Error: want[12] and got[%d]\n", _sptr.get());
 }
 
 Test(shared_ptr, two_shared)
@@ -27,5 +27,5 @@ Test(shared_ptr, two_shared)
     _sptr2 = new int(24);
     _sptr2 = _sptr1;
 
-    cr_assert((_sptr1.get() == 12 && _sptr1.get() == _sptr2.get()), "Error: want[12] and sptr1[%d], sprt2[%d]\n", _sptr1.get(), _sptr2.get());
+    cr_assert((*_sptr1.get() == 12 && *_sptr1.get() == *_sptr2.get()), "Error: want[12] and sptr1[%d], sprt2[%d]\n", _sptr1.get(), _sptr2.get());
 }

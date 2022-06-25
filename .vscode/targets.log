@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue May 10 23:54:51 2022
+# Make data base, printed on Sat Jun 25 15:08:16 2022
 
 # Variables
 
@@ -23,9 +23,9 @@ SRC = $(TESTS)test.cpp $(TESTS)test_shared_ptr.cpp
 # environment
 GTK_RC_FILES = /etc/gtk/gtkrc:/home/benjamin/.gtkrc:/home/benjamin/.config/gtkrc
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-d08f954b-b9e5-4750-bb1d-a8f6518a8cf9.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-85c1c9a7-ec1f-41d3-8149-b4e153cac403.sock
 # environment
-KONSOLE_DBUS_SERVICE = :1.97
+KONSOLE_DBUS_SERVICE = :1.93
 # environment
 VSCODE_CWD = /home/benjamin/yo/C++-Lib
 # environment
@@ -65,7 +65,7 @@ MAIL = /var/spool/mail/benjamin
 # environment
 XDG_DATA_DIRS = /home/benjamin/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
 # environment
-OLDPWD = /home/benjamin/yo/gameEngine
+OLDPWD = /home/benjamin/delivery/indieStudio
 # environment
 KONSOLE_DBUS_WINDOW = /Windows/1
 # automatic
@@ -75,7 +75,7 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/benjamin/.config/Code/CachedData/57fd6d0195bb9b9d1b49f6da5db789060795de47
+VSCODE_CODE_CACHE_PATH = /home/benjamin/.config/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
 # environment
 XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # environment
@@ -83,7 +83,7 @@ SSH_ASKPASS = /usr/libexec/openssh/gnome-ssh-askpass
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/xauth_KfaiOm
+XAUTHORITY = /run/user/1000/xauth_YrXEfJ
 # default
 .LOADED := 
 # default
@@ -109,7 +109,7 @@ PAM_KWALLET5_LOGIN = /run/user/1000/kwallet5.socket
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXpgGq1t/agent.3116
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXLY2dVY/agent.3185
 # default
 .SHELLFLAGS := -c
 # environment
@@ -131,7 +131,7 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 18568
+VSCODE_PID = 11655
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
@@ -141,7 +141,7 @@ GDK_CORE_DEVICE_EVENTS = 1
 # makefile (from 'Makefile', line 8)
 INCLUDES = -I string/ -I exceptions/ -I list/ -I text/ -I shared_ptr/ -I unique_ptr/ -I map/ -I file/ -I math/ 
 # environment
-SESSION_MANAGER = local/unix:@/tmp/.ICE-unix/3398,unix/unix:/tmp/.ICE-unix/3398
+SESSION_MANAGER = local/unix:@/tmp/.ICE-unix/3454,unix/unix:/tmp/.ICE-unix/3454
 # automatic
 *F = $(notdir $*)
 # environment
@@ -163,7 +163,7 @@ MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=none
 # environment
-XDG_ACTIVATION_TOKEN = kwin-2
+XDG_ACTIVATION_TOKEN = kwin-1
 # environment
 SHLVL = 2
 # environment
@@ -185,7 +185,7 @@ LANGUAGE =
 # automatic
 ^F = $(notdir $^)
 # environment
-INVOCATION_ID = 06730b62b10544cc8323e99e6e7edce1
+INVOCATION_ID = 17ea827654de45389f4b3725c90bc4d4
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -223,7 +223,7 @@ XDG_VTNR = 2
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 3412
+SYSTEMD_EXEC_PID = 3468
 # environment
 HISTCONTROL = ignoredups
 # environment
@@ -241,7 +241,7 @@ TESTS = tests/
 # environment
 KONSOLE_DBUS_SESSION = /Sessions/1
 # environment
-MANAGERPID = 3097
+MANAGERPID = 3154
 # environment
 QT_WAYLAND_FORCE_DPI = 96
 # environment
@@ -249,7 +249,7 @@ which_declare = declare -f
 # environment
 XKB_DEFAULT_LAYOUT = fr
 # environment
-SSH_AGENT_PID = 3273
+SSH_AGENT_PID = 3334
 # environment
 _ = /usr/bin/make
 # environment
@@ -257,7 +257,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 COLORTERM = truecolor
 # environment
-JOURNAL_STREAM = 8:41222
+JOURNAL_STREAM = 8:41546
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -271,7 +271,7 @@ QT_IM_MODULE = xim
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-46f9db78-1.67.0-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-46f9db78-1.68.1-main.sock
 # environment
 TERM = xterm-256color
 # environment
@@ -279,7 +279,6 @@ XDG_SESSION_ID = 2
 # environment
 XCURSOR_SIZE = 24
 # default
- 
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
@@ -294,7 +293,7 @@ ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
 XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/benjamin
 # environment
-SHELL_SESSION_ID = c7584435b9434163a9f2c94a9b788482
+SHELL_SESSION_ID = e6772d3f187a45f8a2708aa82072d3ed
 # environment
 KDE_SESSION_VERSION = 5
 # default
@@ -305,8 +304,9 @@ KDE_FULL_SESSION = true
 XDG_MENU_PREFIX = kf5-
 # environment
 GDMSESSION = plasma
+ 
 # variable set hash-table stats:
-# Load=145/1024=14%, Rehash=0, Collisions=17/184=9%
+# Load=145/1024=14%, Rehash=0, Collisions=21/191=11%
 
 # Pattern-specific Variable Values
 
@@ -314,17 +314,17 @@ GDMSESSION = plasma
 
 # Directories
 
-# . (device 66312, inode 3280276): 19 files, no impossibilities.
-# tests (device 66312, inode 10616990): 4 files, no impossibilities so far.
+# . (device 66312, inode 3280276): 23 files, no impossibilities.
+# tests (device 66312, inode 10616990): 5 files, no impossibilities so far.
 
-# 23 files, no impossibilities in 2 directories.
+# 28 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
 %.o: %.cpp
 #  recipe to execute (from 'Makefile', line 30):
 	@echo "$(BIN_NAME) > [CPP: $<]"
-	@g++ -c $< $(INCLUDES) -o $@
+	@g++ -c $< $(INCLUDES) -o $@ -g
 
 # 1 implicit rules, 0 (0.0%) terminal.
 # Files
@@ -332,7 +332,7 @@ GDMSESSION = plasma
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-02 22:54:37.940255613
+#  Last modified 2022-05-24 13:50:11.191360672
 #  File has been updated.
 #  Successfully updated.
 
@@ -343,52 +343,62 @@ clean:
 #  recipe to execute (from 'Makefile', line 40):
 	rm -f $(OBJ)
 
+# Not a target:
+tests/test_shared_ptr.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-05-28 15:21:03.576637226
+#  File has been updated.
+#  Successfully updated.
+
 tests/test.o: tests/test.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tests/test'
-#  File does not exist.
+#  Last modified 2022-06-25 15:03:49.908143712
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := tests/test.o
-# automatic
-# * := tests/test
-# automatic
-# < := tests/test.cpp
-# automatic
-# + := tests/test.cpp
-# automatic
-# % := 
-# automatic
-# ^ := tests/test.cpp
-# automatic
-# ? := tests/test.cpp
-# automatic
-# | := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/16=6%
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 30):
 	@echo "$(BIN_NAME) > [CPP: $<]"
-	@g++ -c $< $(INCLUDES) -o $@
+	@g++ -c $< $(INCLUDES) -o $@ -g
 
 re: fclean all
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-tests/test_shared_ptr.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+tests/test_shared_ptr.o: tests/test_shared_ptr.cpp
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'tests/test_shared_ptr'
+#  Last modified 2022-06-25 15:03:50.438143765
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 30):
+	@echo "$(BIN_NAME) > [CPP: $<]"
+	@g++ -c $< $(INCLUDES) -o $@ -g
 
 tests: tests/test.o tests/test_shared_ptr.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-05-10 18:13:37.232151658
+#  Implicit/static pattern stem: ''
+#  Last modified 2022-06-25 15:03:50.428143764
 #  File has been updated.
 #  Needs to be updated (-q is set).
+# automatic
+# @ := tests
+# automatic
+# * := 
+# automatic
+# < := tests/test.o
+# automatic
+# + := tests/test.o tests/test_shared_ptr.o
+# automatic
+# % := 
+# automatic
+# ^ := tests/test.o tests/test_shared_ptr.o
+# automatic
+# ? := tests/test_shared_ptr.o
+# automatic
+# | := 
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+# Load=8/32=25%, Rehash=0, Collisions=15/20=75%
 #  recipe to execute (from 'Makefile', line 36):
 	@g++ -o $(BIN_NAME) $(OBJ) $(INCLUDES) $(LIBS)
 	@g++ -o bin_test main_test.cpp -g $(INCLUDES) $(LIBS)
@@ -413,7 +423,7 @@ all: tests
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+# Load=0/32=0%, Rehash=0, Collisions=0/12=0%
 
 fclean: clean
 #  Implicit rule search has not been done.
@@ -423,20 +433,26 @@ fclean: clean
 	rm -f $(BIN_NAME)
 	rm -f bin_test
 
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # files hash-table stats:
-# Load=11/1024=1%, Rehash=0, Collisions=0/32=0%
+# Load=12/1024=1%, Rehash=0, Collisions=0/37=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 35 / storage = 311 B / avg = 8 B
-# current buf: size = 8162 B / used = 311 B / count = 35 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 42 / storage = 411 B / avg = 9 B
+# current buf: size = 8162 B / used = 411 B / count = 42 / avg = 9 B
 
-# strcache performance: lookups = 54 / hit rate = 35%
+# strcache performance: lookups = 63 / hit rate = 33%
 # hash-table stats:
-# Load=35/8192=0%, Rehash=0, Collisions=0/54=0%
-# Finished Make data base on Tue May 10 23:54:51 2022
+# Load=42/8192=1%, Rehash=0, Collisions=0/63=0%
+# Finished Make data base on Sat Jun 25 15:08:16 2022
 
  

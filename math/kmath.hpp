@@ -20,10 +20,10 @@ namespace kap35 {
     class math {
         public:
 
-        static string uintToBinary(unsigned int const& i) {
+        static string uintToBinary(size_t const& i) {
             string res;
-            unsigned int d = 1;
-            unsigned int tmpI = i;
+            size_t d = 1;
+            size_t tmpI = i;
 
             if (i == 0)
                 return "0";
@@ -50,14 +50,14 @@ namespace kap35 {
             return res;
         }
 
-        static unsigned int binToUInt(string const& str) {
+        static size_t binToUInt(string const& str) {
             string strTmp = str;
-            unsigned int res = 0;
-            unsigned int mult = 1;
+            size_t res = 0;
+            size_t mult = 1;
 
             strTmp.inverse();
 
-            for (unsigned int i = 0; i < strTmp.size(); i++) {
+            for (size_t i = 0; i < strTmp.size(); i++) {
                 if (strTmp[i] == '1') {
                     res += mult;
                 }
@@ -66,58 +66,58 @@ namespace kap35 {
             return res;
         }
 
-        static unsigned int hexaToUInt(string const& str) {
+        static size_t hexaToUInt(string const& str) {
             list<string> bits;
 
-            for (unsigned int i = 0; i < str.size(); i++) {
+            for (size_t i = 0; i < str.size(); i++) {
                 switch (str[i]) {
                     case '0':
-                        bits.push_back("0000");
+                        bits.pushBack("0000");
                         break;
                     case '1':
-                        bits.push_back("0001");
+                        bits.pushBack("0001");
                         break;
                     case '2':
-                        bits.push_back("0010");
+                        bits.pushBack("0010");
                         break;
                     case '3':
-                        bits.push_back("0011");
+                        bits.pushBack("0011");
                         break;
                     case '4':
-                        bits.push_back("0100");
+                        bits.pushBack("0100");
                         break;
                     case '5':
-                        bits.push_back("0101");
+                        bits.pushBack("0101");
                         break;
                     case '6':
-                        bits.push_back("0110");
+                        bits.pushBack("0110");
                         break;
                     case '7':
-                        bits.push_back("0111");
+                        bits.pushBack("0111");
                         break;
                     case '8':
-                        bits.push_back("1000");
+                        bits.pushBack("1000");
                         break;
                     case '9':
-                        bits.push_back("1001");
+                        bits.pushBack("1001");
                         break;
                     case 'A':
-                        bits.push_back("1010");
+                        bits.pushBack("1010");
                         break;
                     case 'B':
-                        bits.push_back("1011");
+                        bits.pushBack("1011");
                         break;
                     case 'C':
-                        bits.push_back("1100");
+                        bits.pushBack("1100");
                         break;
                     case 'D':
-                        bits.push_back("1101");
+                        bits.pushBack("1101");
                         break;
                     case 'E':
-                        bits.push_back("1110");
+                        bits.pushBack("1110");
                         break;
                     case 'F':
-                        bits.push_back("1111");
+                        bits.pushBack("1111");
                         break;
                     default:
                         break;
@@ -126,13 +126,13 @@ namespace kap35 {
 
             string bitsStr;
 
-            for (unsigned int i = 0; i < bits.size(); i++)
+            for (size_t i = 0; i < bits.size(); i++)
                 bitsStr += bits[i];
 
             return binToUInt(bitsStr);
         }
 
-        static string uintToHexa(unsigned int const& i) {
+        static string uintToHexa(size_t const& i) {
             string bin = uintToBinary(i);
             string res = "";
 
@@ -144,8 +144,8 @@ namespace kap35 {
 
             list<string> bits = bin.divide(4);
 
-            for (unsigned int bit = 0; bit < bits.size(); bit++) {
-                unsigned int binInt = binToUInt(bits[bit]);
+            for (size_t bit = 0; bit < bits.size(); bit++) {
+                size_t binInt = binToUInt(bits[bit]);
 
                 if (binInt < 10) {
                     res += (char)(binInt + 48);
@@ -157,7 +157,7 @@ namespace kap35 {
             return res;
         }
 
-        static string uintToOctal(unsigned int const& i) {
+        static string uintToOctal(size_t const& i) {
             string res;
             string bin = uintToBinary(i);
             while (bin.size() % 3) {
@@ -168,7 +168,7 @@ namespace kap35 {
             
             list<string> bins = bin.divide(3);
 
-            for (unsigned int i = 0; i < bins.size(); i++) {
+            for (size_t i = 0; i < bins.size(); i++) {
                 string tmpInt(octalFrom3Bin(bins[i]));
 
                 res += tmpInt;
@@ -177,21 +177,21 @@ namespace kap35 {
             return res;
         }
 
-        static unsigned int octalToUint(string const& str) {
+        static size_t octalToUint(string const& str) {
             string bin = "";
 
-            for (unsigned int i = 0; i < str.size(); i++) {
+            for (size_t i = 0; i < str.size(); i++) {
                 bin += binFrom1Octal(str[i]);
             }
 
             return binToUInt(bin);
         }
 
-        static string uintToViceminal(unsigned int const& i) {
+        static string uintToViceminal(size_t const& i) {
             return "";
         }
 
-        static string uintToTrentadal(unsigned int const& i) {
+        static string uintToTrentadal(size_t const& i) {
             string res = "";
             string bin = uintToBinary(i);
 
@@ -202,8 +202,8 @@ namespace kap35 {
                 bin = tmpStr;
             }
             list<string> bins = bin.divide(5);
-            for (unsigned int i = 0; i < bins.size(); i++) {
-                unsigned int valBin = binToUInt(bins[i]);
+            for (size_t i = 0; i < bins.size(); i++) {
+                size_t valBin = binToUInt(bins[i]);
                 if (valBin < 10) {
                     res += (char)(valBin + 48);
                 } else {
@@ -219,10 +219,10 @@ namespace kap35 {
             return res;
         }
 
-        static unsigned int trentadalToUint(string const& str) {
+        static size_t trentadalToUint(string const& str) {
             string bin;
 
-            for (unsigned int i = 0; i < str.size(); i++) {
+            for (size_t i = 0; i < str.size(); i++) {
                 string sstr = "";
                 if (str[i] >= '0' && str[i] <= '9') {
                     sstr = uintToBinary(str[i] - 48);
@@ -244,34 +244,34 @@ namespace kap35 {
         }
 
         static string addBinary(string const& b1, string const& b2) {
-            unsigned int r1 = binToUInt(b1);
-            unsigned int r2 = binToUInt(b2);
+            size_t r1 = binToUInt(b1);
+            size_t r2 = binToUInt(b2);
 
-            unsigned int r3 = r1 + r2;
+            size_t r3 = r1 + r2;
 
             return uintToBinary(r3);
         }
 
         static string addHexa(string const& h1, string const& h2) {
-            unsigned int r1 = hexaToUInt(h1);
-            unsigned int r2 = hexaToUInt(h2);
+            size_t r1 = hexaToUInt(h1);
+            size_t r2 = hexaToUInt(h2);
 
-            unsigned int r3 = r1 + r2;
+            size_t r3 = r1 + r2;
 
             return uintToHexa(r3);
         }
 
         static string addOctal(string const& o1, string const& o2) {
-            unsigned int r1 = octalToUint(o1);
-            unsigned int r2 = octalToUint(o2);
+            size_t r1 = octalToUint(o1);
+            size_t r2 = octalToUint(o2);
 
-            unsigned int r3 = r1 + r2;
+            size_t r3 = r1 + r2;
 
             return uintToOctal(r3);
         }
 
         private:
-            static unsigned int octalFrom3Bin(string const& bin) {
+            static size_t octalFrom3Bin(string const& bin) {
                 return binToUInt(bin);
             }
 

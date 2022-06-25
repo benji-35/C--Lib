@@ -12,6 +12,7 @@
 #include "ktext.hpp"
 #include "kfile.hpp"
 #include "kmap.hpp"
+#include "kutils.hpp"
 
 namespace kap35 {
     class text;

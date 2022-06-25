@@ -11,6 +11,16 @@
 #include "klist.hpp"
 #include <iostream>
 
+#ifndef K_SIZE_T
+    namespace kap35 {
+        typedef unsigned long size_t;
+    }
+#endif
+
+#ifndef KEY_NOT_FOUND
+    #define KEY_NOT_FOUND "key not found\0"
+#endif
+
 namespace kep35 {
     class list;
 }
@@ -46,8 +56,7 @@ namespace kap35 {
                         return tmp->_cont;
                     tmp = tmp->_next;
                 }
-                char msg[13] = {'n', 'o', ' ', 'k', 'e', 'y', ' ', 'f', 'o', 'u', 'n', 'd', 0};
-                throw Exception::MapError(msg);
+                throw Exception::MapError((char *)KEY_NOT_FOUND);
             }
 
             bool keyExists(KEY const& k) {
@@ -61,9 +70,9 @@ namespace kap35 {
                 return false;
             }
 
-            unsigned int size() const {
+            size_t size() const {
                 node_map *tmp = _list;
-                unsigned int res = 0;
+                size_t res = 0;
 
                 while (tmp != nullptr) {
                     tmp = tmp->_next;

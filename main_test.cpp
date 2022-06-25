@@ -16,12 +16,22 @@
 #include "kymlfile.hpp"
 #include "kmath.hpp"
 
+#include <iostream>
+#include <string>
+
 int main(int ac, char **av)
 {
-    for (unsigned int i = 0; i < 1000; i++) {
-        kap35::string trenta = kap35::math::uintToTrentadal(i);
-        std::cout << "val: " << std::to_string(i) << ", " << trenta
-            << ", back: " << std::to_string(kap35::math::trentadalToUint(trenta)) << std::endl;
+    kap35::string str("Coucou toi !");
+
+    kap35::list<kap35::string> txtL;
+
+    txtL = str.split(" ");
+
+    kap35::text txt(txtL);
+
+    for (kap35::size_t i = 0; i < txt.size(); i++) {
+        kap35::string out("txt[");
+        std::cout << out + kap35::string(i) + "] = " + txt[i] << std::endl;
     }
 
     return 0;

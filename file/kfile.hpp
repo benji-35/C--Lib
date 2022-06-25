@@ -10,6 +10,7 @@
 
 #include "kstring.hpp"
 #include "ktext.hpp"
+#include "kutils.hpp"
 
 #include <string>
 #include <fstream>

@@ -1,9 +1,9 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/benjamin/yo/C++-Lib'
 echo "run_test > [CPP: tests/test.cpp]"
-g++ -c tests/test.cpp -I string/ -I exceptions/ -I list/ -I text/ -I shared_ptr/ -I unique_ptr/ -I map/ -I file/ -I math/  -o tests/test.o
+g++ -c tests/test.cpp -I string/ -I exceptions/ -I list/ -I text/ -I shared_ptr/ -I unique_ptr/ -I map/ -I file/ -I math/  -o tests/test.o -g
 echo "run_test > [CPP: tests/test_shared_ptr.cpp]"
-g++ -c tests/test_shared_ptr.cpp -I string/ -I exceptions/ -I list/ -I text/ -I shared_ptr/ -I unique_ptr/ -I map/ -I file/ -I math/  -o tests/test_shared_ptr.o
+g++ -c tests/test_shared_ptr.cpp -I string/ -I exceptions/ -I list/ -I text/ -I shared_ptr/ -I unique_ptr/ -I map/ -I file/ -I math/  -o tests/test_shared_ptr.o -g
 g++ -o run_test tests/test.o tests/test_shared_ptr.o -I string/ -I exceptions/ -I list/ -I text/ -I shared_ptr/ -I unique_ptr/ -I map/ -I file/ -I math/  -lcriterion
 g++ -o bin_test main_test.cpp -g -I string/ -I exceptions/ -I list/ -I text/ -I shared_ptr/ -I unique_ptr/ -I map/ -I file/ -I math/  -lcriterion
 make: Leaving directory '/home/benjamin/yo/C++-Lib'

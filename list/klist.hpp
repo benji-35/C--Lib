@@ -11,153 +11,186 @@
 #include "kexceptions.hpp"
 #include "kshared_ptr.hpp"
 #include <iostream>
+#include "kutils.hpp"
+
+#ifndef K_SIZE_T
+    namespace kap35 {
+        typedef unsigned long size_t;
+    }
+
+#endif
 
 namespace kap35 {
+
     template<typename T>
     class list {
         public:
-            struct node_list {
-                T _val;
-                shared_ptr<node_list> _next;
-                shared_ptr<node_list> _before;
+            struct NodeList {
+                NodeList* next = nullptr;
+                NodeList* previous = nullptr;
+                T value;
 
-                node_list(T val, shared_ptr<node_list> before, shared_ptr<node_list> next) {
-                    _val = val;
-                    _next = next;
-                    _before = before;
+                NodeList(T val, NodeList* nxt = nullptr, NodeList* prev = nullptr) {
+                    value = val;
+                    next = nxt;
+                    previous = prev;
+
+                    if (previous != nullptr) {
+                        previous->next = this;
+                    }
+                    if (next != nullptr) {
+                        next->previous = this;
+                    }
                 }
             };
 
-            ~list() {
+            /**
+             * @brief Destroy the list<T> object
+             * 
+             *  A1 - A2 - N - A3 - A4
+             * 
+             * 
+             */
+
+            ~list<T>() {
                 clear();
             }
 
-            void push_back(T val) {
-                insert(size(), val);
+            //functions
+
+            void pushFront(T val) {
+                pushAt(val, 0);
             }
 
-            void push_front(T val) {
-                insert(0, val);
+            void pushBack(T val) {
+                pushAt(val, size());
             }
 
-            void insert(unsigned int const& index, T val) {
-                unsigned int _index = index;
-                if (_index == 0) {
-                    shared_ptr<node_list> n = new node_list(val, nullptr, _list);
-                    if (_list != nullptr) {
-                        _list.get()._before = n;
+            void pushAt(T val, size_t index) {
+                if (index == 0) {
+                    DEB_K("insert at front");
+                    if (hd == nullptr) {
+                        hd = new NodeList(val);
+                    } else {
+                        NodeList *nHd = new NodeList(val, hd);
+                        hd = nHd;
                     }
-                    _list = n;
                     return;
                 }
-                if (_index == size()) {
-                    shared_ptr<node_list> _last = getLast();
-                    _last.get()._next = new node_list(val, _last, nullptr);
+                if (index >= size()) {
+                    DEB_K("insert at end");
+                    NodeList *last = getLast();
+                    if (last == nullptr) {
+                        pushAt(val, 0);
+                    } else {
+                        NodeList *nnl = new NodeList(val, nullptr, last);
+                    }
                     return;
                 }
-                shared_ptr<node_list> tmp = _list;
-                while (_index > 0 || tmp.get()._next == nullptr) {
-                    _index--;
+                DEB_K("insert at " + std::to_string(index));
+                NodeList *_at = getAt(index);
+                NodeList *nnl = new NodeList(val, _at, _at->previous);
+            }
+
+            void popFront() {
+                popAt(0);
+            }
+
+            void popBack() {
+                popAt(size());
+            }
+
+            void popAt(size_t index) {
+                if (index == 0) {
+                    NodeList *tmp = hd;
+                    if (tmp == nullptr)
+                        return;
+                    hd = hd->next;
+                    delete tmp;
+                    return;
                 }
-                shared_ptr<node_list> n = new node_list(val, tmp, tmp.get()._next);
-                tmp.get()._next = n;
-            }
-
-            void pop_back() {
-                pop_at(size() - 1);
-            }
-
-            void pop_front() {
-                pop_at(0);
-            }
-
-            void pop_at(unsigned int index) {
-                if (index == 0)
-                    return pop_front();
-                if (index >= size() - 1)
-                    return pop_back();
-                shared_ptr<node_list> tmp = _list;
-                while (index > 0) {
-                    tmp = tmp.get()._next;
-                    index--;
+                if (index >= size()) {
+                    NodeList *tmp = getLast();
+                    if (tmp == nullptr) {
+                        popAt(0);
+                        return;
+                    }
+                    tmp->previous->next = nullptr;
+                    delete tmp;
                 }
-                ((shared_ptr<node_list>)tmp.get()._before).get()._next = tmp.get()._next;
-                tmp.destroy();
+                NodeList *tmp = getAt(index);
+                tmp->previous->next = tmp->next;
+                tmp->next->previous = tmp->previous;
+                delete tmp;
             }
 
-            unsigned int size() const {
-                shared_ptr<node_list> tmp = _list;
-                unsigned int res = 0;
+            T &at(size_t index) const {
+                if (index < size()) {
+                    return getAt(index)->value;
+                }
+                throw Exception::ListError((char *)INDEX_OUT_OF_RANGE);
+            }
 
-                if (tmp.isEmpty())
-                    return 0;
-                while (!tmp.isEmpty()) {
-                    tmp = (shared_ptr<node_list>)((node_list &)tmp.get())._next;
+            size_t size() const {
+                size_t res = 0;
+                NodeList *tmp = hd;
+                while (tmp != nullptr) {
                     res++;
+                    if (tmp != nullptr)
+                        tmp = tmp->next;
                 }
                 return res;
             }
 
             void clear() {
-                shared_ptr<node_list> tmp = _list;
-                shared_ptr<node_list> nxt;
-
-                if (_list.isEmpty() || tmp.isEmpty()) {
-                    _list.destroy();
-                    return;
+                while (size() > 0) {
+                    popFront();
                 }
-                while (!tmp.isEmpty()) {
-                    nxt = tmp.get()._next;
-                    tmp.destroy();
-                    tmp = nxt;
-                }
-                _list = nullptr;
+                
             }
 
-            T& at(unsigned int index) {
-                return get(index);
+            void append(list<T> const& l) {
+                NodeList *tmp = l.hd;
+                while (tmp != nullptr) {
+                    pushBack(tmp->value);
+                    tmp = tmp->next;
+                }
             }
 
-            T& get(unsigned int index) const {
-                shared_ptr<node_list> tmp;
+            //operators
 
-                tmp = _list;
-                while (index > 0) {
-                    tmp = ((node_list &)tmp.get())._next;
-                    if (tmp.isEmpty())
-                        break;
-                    index--;
-                }
-                if (tmp.isEmpty()) {
-                    char msg[19] = {'i', 'n', 'd', 'e', 'x', ' ', 'o', 'u', 't', ' ', 'o', 'f', ' ', 'r', 'a', 'n', 'g', 'e', 0};
-                    throw Exception::ListError(msg);
-                }
-                return tmp.get()._val;
+            T& operator [](size_t index) {
+                return at(index);
             }
 
             list<T> &operator=(list<T> const& l) {
                 clear();
-                for (unsigned int i = 0; i < l.size(); i++) {
-                    push_back(l.get(i));
-                }
+                append(l);
                 return *this;
             }
 
-            T &operator[](unsigned int index) {
-                return at(index);
-            }
-
         private:
-            shared_ptr<node_list> getLast() {
-                if (_list.isEmpty())
-                    return nullptr;
-                shared_ptr<node_list> tmp = _list;
-                while (tmp.get()._next != nullptr)
-                    tmp = tmp.get()._next;
+            NodeList *hd = nullptr;
+    
+            NodeList *getLast() const {
+                if (size() == 0)
+                    return hd;
+                NodeList *tmp = hd;
+                while (tmp->next != nullptr) {
+                    tmp = tmp->next;
+                }
                 return tmp;
             }
-
-            shared_ptr<node_list> _list;
+            NodeList *getAt(size_t index) const {
+                size_t curr = 0;
+                if (index >= size())
+                    return nullptr;
+                NodeList *tmp = hd;
+                for (size_t i = 0; i < index; i++) {
+                    tmp = tmp->next;
+                }
+                return tmp;
+            }
     };
 
 }
